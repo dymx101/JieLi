@@ -12,6 +12,7 @@
 #import "GeedBackViewController.h"
 #import "AboutUsViewController.h"
 #import "VisionUpDate.h"
+#import "UserHelpViewController.h"
 
 #define kDocument_Folder [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
@@ -279,6 +280,15 @@
             VisionUpDate *viewController = [[VisionUpDate alloc] initWithNibName:@"VisionUpDate" bundle:nil];
             [self.navigationController pushViewController:viewController animated:YES];
         }
+        else if (row == 3){
+           UserHelpViewController *viewController = [[UserHelpViewController alloc] initWithNibName:@"UserHelpViewController" bundle:nil];
+           [viewController setHidesBottomBarWhenPushed:YES];
+           [self.navigationController pushViewController:viewController animated:YES];
+           [viewController release];
+           viewController = nil;
+           
+        }
+
 
     }
 

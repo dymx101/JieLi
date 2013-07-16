@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DiyTopBar.h"
 #import "HCBookShelf.h"
-@interface LocalEpubBookViewController : UIViewController
+@interface LocalEpubBookViewController : UIViewController<BookViewDelegate>
 @property (retain, nonatomic) IBOutlet DiyTopBar *topBar;
 @property (retain, nonatomic) IBOutlet HCBookShelf *bookShelf;
-@property (retain,nonatomic) NSArray *ebooks;
+@property (retain,nonatomic) NSMutableArray *ebooks;
 @property (retain, nonatomic) IBOutlet UIImageView *backGroundImageView;
 @end

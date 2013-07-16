@@ -96,6 +96,8 @@
             default:
                 break;
         }
+        [imgageView release];
+        imgageView = nil;
     }
     self.MyPageControl.numberOfPages = numberOfPages;
     self.MyPageControl.currentPage = 0;
@@ -125,7 +127,8 @@
     if ([self checkNetWorkState]) {
         GoodBookViewController *viewController = [[GoodBookViewController alloc] initWithNibName:@"GoodBookViewController" bundle:nil];
         [self.navigationController pushViewController:viewController animated:YES];
-
+        [viewController release];
+        viewController = nil;
     }
 }
 //到促销优惠
@@ -133,21 +136,27 @@
     if ([self checkNetWorkState]) {
     PromotionViewController *viewController = [[PromotionViewController alloc] initWithNibName:@"PromotionViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
-    }
+        [viewController release];
+        viewController = nil;
+ }
 }
 //到读书活动
 - (IBAction)pushToReadingParty:(id)sender {
     if ([self checkNetWorkState]) {
     ReadingActivityViewController *viewController = [[ReadingActivityViewController alloc] initWithNibName:@"ReadingActivityViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
-    }
+        [viewController release];
+        viewController = nil;
+ }
 }
 //到身边书店
 - (IBAction)pushToSeachBookstore:(id)sender {
     if ([self checkNetWorkState]) {
     SeachBookstoreViewController *viewController = [[SeachBookstoreViewController alloc] initWithNibName:@"SeachBookstoreViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
-    }
+        [viewController release];
+        viewController = nil;
+ }
 }
 //到会员专区
 - (IBAction)pushToMemberArea:(id)sender {
@@ -156,17 +165,23 @@
     if (![AppDelegate dAccountName]) {
         LogViewController *viewController = [[LogViewController alloc] initWithNibName:@"LogViewController" bundle:nil];
         [self.navigationController pushViewController:viewController animated:YES];
-    }
+        [viewController release];
+        viewController = nil;
+  }
     else{
         MemberAreaViewController *viewController = [[MemberAreaViewController alloc] initWithNibName:@"MemberAreaViewController" bundle:nil];
         [self.navigationController pushViewController:viewController animated:YES];
-    }
+        [viewController release];
+        viewController = nil;
+ }
     }
 }
 //到个性设置
 - (IBAction)pushToSetPersonality:(id)sender {
     PersonalitySettingViewController *viewController = [[PersonalitySettingViewController alloc] initWithNibName:@"PersonalitySettingViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
+    [viewController release];
+    viewController = nil;
 }
 
 

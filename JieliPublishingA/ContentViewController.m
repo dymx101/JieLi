@@ -70,8 +70,13 @@
     [downingView.proGressView setProgress:1];
     [downingView removeFromSuperview];
     
-    
-    NSDictionary *dic = [[NSDictionary alloc] initWithObjects:@[self.bookInfo.bookName,self.bookInfo.bookThumb,[url absoluteString]] forKeys:@[@"bookName",@"bookThumb",@"fileUrl"]];
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:[NSString stringWithFormat:@"bookInfoFile%d",self.bookInfo.bookId]];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.bookInfo];
+    [data writeToFile:filename atomically:YES];
+//    [NSKeyedArchiver archiveRootObject:self.bookInfo toFile:filename];
+
+    NSDictionary *dic = [[NSDictionary alloc] initWithObjects:@[self.bookInfo.bookName,self.bookInfo.bookThumb,[url absoluteString],filename] forKeys:@[@"bookName",@"bookThumb",@"fileUrl",@"bookInfoFile"]];
     
     NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[kDocument_Folder stringByAppendingPathComponent:@"epubBooksList.plist"]];
     if (!array) {
@@ -94,10 +99,12 @@
     
     EPubViewController *epubController = [[EPubViewController alloc] initWithNibName:@"EPubView" bundle:nil];
     [self.tabBarController.navigationController pushViewController:epubController animated:YES];
-    
+    epubController.bookInfo = self.bookInfo;
 //    NSURL *urlA = [NSURL fileURLWithPath:path];
     //    NSURL *urlB = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"人生百忌2" ofType:@"epub"]];
     [epubController loadEpub:url];
+//    [epubController release];
+    epubController = nil;
 
 }
 - (void)viewDidLoad

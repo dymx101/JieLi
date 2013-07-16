@@ -11,6 +11,7 @@
 #import "GeedBackViewController.h"
 #import "AboutUsViewController.h"
 #import "VisionUpDate.h"
+#import "UserHelpViewController.h"
 
 @interface ForthViewController (){
     NSArray *leftImageArray;
@@ -91,15 +92,32 @@ return cell;
     if (row == 0) {
         GeedBackViewController *viewController = [[GeedBackViewController alloc] initWithNibName:@"GeedBackViewController" bundle:nil];
         [self.navigationController pushViewController:viewController animated:YES];
+       [viewController release];
+       viewController = nil;
+
     }
     else if (row == 1){
        AboutUsViewController *viewController = [[AboutUsViewController alloc] initWithNibName:@"AboutUsViewController" bundle:nil];
        [self.navigationController pushViewController:viewController animated:YES];
+       [viewController release];
+       viewController = nil;
+
     }
     else if (row == 2){
        VisionUpDate *viewController = [[VisionUpDate alloc] initWithNibName:@"VisionUpDate" bundle:nil];
        [self.navigationController pushViewController:viewController animated:YES];
+       [viewController release];
+       viewController = nil;
+       
     }
+//    else if (row == 3){
+//       UserHelpViewController *viewController = [[UserHelpViewController alloc] initWithNibName:@"UserHelpViewController" bundle:nil];
+//       [self.navigationController setHidesBottomBarWhenPushed:YES];
+//       [self.navigationController pushViewController:viewController animated:YES];
+//       [viewController release];
+//       viewController = nil;
+//       
+//    }
    
 }
 

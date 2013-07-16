@@ -303,9 +303,12 @@
     self.birthdaySureButton.hidden = YES;
 }
 
-
+- (BOOL) validateEmail: (NSString *) candidate {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:candidate];
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField endEditing:YES];
     //    CGRect winRect = [[UIScreen mainScreen] bounds];
     
 //    [UIView beginAnimations:nil context:nil];
@@ -313,6 +316,13 @@
 //    self.frame = CGRectMake(0, 64, self.frame.size.width, self.frame.size.height);
 //    [UIView commitAnimations];
     if(textField.tag ==3){
+        if (![self validateEmail:textField.text]) {
+            NSLog(@"请输入合法的email地址");
+            UIAlertView *ale = [[UIAlertView alloc] initWithTitle:@"请输入合法的email地址" message:nil delegate:self cancelButtonTitle:@"关闭" otherButtonTitles: nil];
+            [ale show];
+            return NO;
+        }
+        
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
         self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y+80, self.editView.frame.size.width, self.editView.frame.size.height);
@@ -325,7 +335,8 @@
         [UIView commitAnimations];
     }
 
-    
+    [textField endEditing:YES];
+
     return NO;
 }
 
@@ -342,7 +353,7 @@
     else if(textField.tag ==3){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y-80, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y-80-30, self.editView.frame.size.width, self.editView.frame.size.height);
         [UIView commitAnimations];
     }
     else if(textField.tag ==4){

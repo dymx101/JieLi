@@ -10,6 +10,7 @@
 #import "ZipArchive.h"
 #import "EPub.h"
 #import "Chapter.h"
+#import "BookInfo.h"
 
 @class SearchResultsViewController;
 @class SearchResult;
@@ -78,5 +79,5 @@
 @property (nonatomic, retain) IBOutlet UILabel *currentPageLabel;
 
 @property BOOL searching;
-
+@property (nonatomic, retain) BookInfo *bookInfo;
 @end

@@ -76,8 +76,10 @@
 //    NSLog(@"Chapter %d: %@ -> %d pages", chapterIndex, title, pageCount);
     
     [webView dealloc];
-    [delegate chapterDidFinishLoad:self];
-    
+    if (delegate) {
+        [delegate chapterDidFinishLoad:self];
+    }
+
 }
 
 - (void)dealloc {

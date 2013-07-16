@@ -80,6 +80,7 @@ enum{
 @protocol HCBookShelfDelegate <NSObject>
 @optional
 -(void)bookShellk:(HCBookShelf *)bookShelf itemSelectedAtIndex:(NSInteger)index;
+-(void)bookshelf:(HCBookShelf *)bookShelf deleteAtIndex:(NSInteger)index;
 -(void)refreshUpdate;
 -(void)loadMoreUpdate;
 @end

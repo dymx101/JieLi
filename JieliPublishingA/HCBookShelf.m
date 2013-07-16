@@ -224,7 +224,16 @@ typedef enum {
 #pragma mark-
 #pragma BookViewDelegate
 -(void)bookViewBeTouched:(BookView*)bookView{
-    [self.itemSelectedDelegate bookShellk:self itemSelectedAtIndex:bookView.tag-BookViewTag];
+    if ([self.itemSelectedDelegate respondsToSelector:@selector(bookShellk:itemSelectedAtIndex:)]) {
+        [self.itemSelectedDelegate bookShellk:self itemSelectedAtIndex:bookView.tag-BookViewTag];
+
+    }
+}
+-(void)bookViewBeDelete:(BookView *)bookView{
+    if ([self.itemSelectedDelegate respondsToSelector:@selector(bookshelf:deleteAtIndex:)]) {
+        [self.itemSelectedDelegate bookshelf:self deleteAtIndex:bookView.tag - BookViewTag];
+        
+    }
 }
 
 -(void)updateData{

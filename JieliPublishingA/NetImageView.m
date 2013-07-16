@@ -22,7 +22,7 @@ static NSOperationQueue *queue;
 }
 //初始化
 -(id)initWithUrl:(NSString *)url{
-    if (self == [super init]) {
+    if (self = [super init]) {
         urlString = [NSString stringWithString:url];
         [urlString retain];
     }
@@ -76,6 +76,8 @@ static NSOperationQueue *queue;
     //7、将其他数据添加到缓冲中
     //将缓冲的数据写入到文件中
     [writer writeToFile:path atomically:YES];
+    [writer release];
+    writer = nil;
 }
 
 @end

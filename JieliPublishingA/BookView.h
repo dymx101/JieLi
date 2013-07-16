@@ -21,7 +21,7 @@
 
 @protocol BookViewDelegate <NSObject>
 -(void)bookViewBeTouched:(BookView*)bookView;
-
+-(void)bookViewBeDelete:(BookView *)bookView;
 @end
 
 @interface BookView : UIView<UIGestureRecognizerDelegate,NetImageViewDelegate>
@@ -32,12 +32,15 @@
 @property (assign,nonatomic) id <BookViewDelegate> delegate;
 
 @property (assign,nonatomic) BOOL isLoadImageFinish;
+@property (strong,nonatomic) UIButton *delButton;
+
 
 +(id)BookViewWithBookInfo:(BookInfo*)bookInfo withPosition:(CGPoint)position;
 +(id)BookViewWithBookInfo:(BookInfo*)bookInfo;
 
 -(id)initWithFrame:(CGRect)frame withCoverImage:(UIImage *)coverImage withLableName:(NSString*)lableName;
 -(id)initWithFrame:(CGRect)frame withCoverImageUrl:(NSString *)coverImageUrl withLableName:(NSString *)lableName;
-
+-(void)editModelStart;
+-(void)editModelEnd;
 //-(void)addTaget:(id)taget action:(SEL)action;
 @end

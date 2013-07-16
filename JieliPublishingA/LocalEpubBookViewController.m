@@ -28,15 +28,34 @@
     }
     return self;
 }
-
+-(void)edit{
+    if ([self.topBar.collectButton.titleLabel.text isEqualToString:@"编辑"]) {
+        [self.topBar.collectButton setTitle:@"完成" forState:UIControlStateNormal];
+        for (BookView *view in self.bookShelf.subviews) {
+            if ([view isKindOfClass:[BookView class]]) {
+                [view editModelStart];
+            }
+        }
+    }
+    else{
+        [self.topBar.collectButton setTitle:@"编辑" forState:UIControlStateNormal];
+        for (BookView *view in self.bookShelf.subviews) {
+            if ([view isKindOfClass:[BookView class]]) {
+                [view editModelEnd];
+            }
+        }
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.backGroundImageView setImage:[PicNameMc backGroundImage]];
 
-    [self.topBar setType:DiyTopBarTypeNone];
+    [self.topBar setType:DiyTopBarTypeCollect];
+    [self.topBar.collectButton setTitle:@"编辑" forState:UIControlStateNormal];
     [self.topBar.backButton addTarget:self action:@selector(popBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topBar.collectButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
     self.topBar.myTitle.text = @"本地图书";
     self.bookShelf.headerView.hidden = YES;
     self.bookShelf.footerView.hidden = YES;
@@ -67,10 +86,15 @@
 //@"bookName",@"bookThumb",@"fileUrl"
 -(BookView *)bookViewForIndex:(NSInteger)index{
     NSDictionary *dic = [self.ebooks objectAtIndex:index];
-    BookView *bv = [[BookView alloc] initWithFrame:CGRectMake(0, 0, ImageViewWith, ImageViewHight+LabelHight) withCoverImageUrl:[dic objectForKey:@"bookThumb"] withLableName:[dic objectForKey:@"bookName"]];
+    NSString *filename = [dic objectForKey:@"bookInfoFile"];
+    
+    BookInfo *bookInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
 
+//    BookView *bv = [[BookView alloc] initWithFrame:CGRectMake(0, 0, ImageViewWith, ImageViewHight+LabelHight) withCoverImageUrl:bookInfo.bookThumb withLableName:bookInfo.bookName];
+    BookView *bv = [BookView BookViewWithBookInfo:bookInfo];
     return bv;
 }
+
 
 #pragma mark -
 #pragma mark HCBookShelf delegate
@@ -78,9 +102,20 @@
     NSLog(@"buttonTouchedAt: %d",index);
     EPubViewController *epubController = [[EPubViewController alloc] initWithNibName:@"EPubView" bundle:nil];
     [self.navigationController pushViewController:epubController animated:YES];
-    NSString *urlString = [[self.ebooks objectAtIndex:index] objectForKey:@"fileUrl"];
+    NSDictionary *dic = [self.ebooks objectAtIndex:index];
+
+    NSString *urlString = [dic objectForKey:@"fileUrl"];
+    NSString *filename = [dic objectForKey:@"bookInfoFile"];
+    
+    BookInfo *bookInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
+    epubController.bookInfo = bookInfo;
     NSURL *url = [NSURL URLWithString:urlString];
     [epubController loadEpub:url];
+}
+-(void)bookshelf:(HCBookShelf *)bookShelf deleteAtIndex:(NSInteger)index{
+    [self.ebooks removeObjectAtIndex:index];
+    [self.ebooks writeToFile:[kDocument_Folder stringByAppendingPathComponent:@"epubBooksList.plist"] atomically:YES];
+    [self.bookShelf reloadData];
 
 }
 

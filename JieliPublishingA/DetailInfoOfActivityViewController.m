@@ -69,10 +69,13 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
 //}
 - (IBAction)share:(id)sender {
     
-    svc = [[ShareViewController alloc] initWithNibName:@"ShareViewController" bundle:nil];
+    ShareViewController *vc= [[ShareViewController alloc] initWithNibName:@"ShareViewController" bundle:nil];
 //    svc.view.backgroundColor = [UIColor whiteColor];
-    svc.textView.text = [self.myTextView.text retain];
-    svc.sendImage = [self.myImageView.image retain];
+    vc.textView.text = self.myTextView.text;
+ 
+    vc.sendImage = self.myImageView.image ;
+    svc = vc;
+    vc = nil;
     
 	self.popupView.layer.cornerRadius = 12;
     self.popupView.layer.shadowOpacity = 0.7;
@@ -98,7 +101,7 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
 
     UIButton *sendButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0,80, 40)];
     sendButton.center = CGPointMake(self.popupView.frame.size.width/2, self.popupView.frame.size.height-sendButton.frame.size.height/2);
-    [sendButton setImage:[PicNameMc redBg:sendButton title:@"发送分享"] forState:UIControlStateNormal];
+    [sendButton setImage:[PicNameMc buttonBg:sendButton title:@"发送分享"] forState:UIControlStateNormal];
     [sendButton addTarget:self action:@selector(sendWeiBo) forControlEvents:UIControlEventTouchUpInside];
      [self.popupView addSubview:sendButton];
     
@@ -439,13 +442,16 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
     imageView.frame = CGRectMake(view.center.x-imageSize.width/2,view.center.y-imageSize.height/2, imageSize.width, imageSize.height);
     [UIView commitAnimations];
     
-    
+    [imageView release];
+    imageView = nil;
     
     UITapGestureRecognizer *stap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBackTaped:)];
     [stap setNumberOfTapsRequired:1];
     stap.delegate = self;
     [view addGestureRecognizer:stap];
-
+    
+    [view release];
+    view = nil;
     
 }
 -(void)photoBackTaped:(UITapGestureRecognizer *)stap{

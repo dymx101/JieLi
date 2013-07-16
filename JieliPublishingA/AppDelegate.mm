@@ -37,7 +37,7 @@ static NSOperationQueue *queue;
 
 //本地收藏图书
 +(BOOL)idCollectedBook:(BookInfo *)bookInfo{
-    NSMutableArray *books = [[NSMutableArray arrayWithArray:[[self class] getCollectedBooks]] retain];
+    NSMutableArray *books = [NSMutableArray arrayWithArray:[[self class] getCollectedBooks]] ;
     for (BookInfo *info in books) {
         if (info.bookId == bookInfo.bookId) {
             return YES;
@@ -46,7 +46,7 @@ static NSOperationQueue *queue;
     return NO;
 }
 +(void)collectABook:(BookInfo *)bookInfo{
-    NSMutableArray *books = [[NSMutableArray arrayWithArray:[[self class] getCollectedBooks]] retain];
+    NSMutableArray *books = [NSMutableArray arrayWithArray:[[self class] getCollectedBooks]] ;
     BookInfo *delInfo = nil;
     for (BookInfo *info in books) {
         if (info.bookId == bookInfo.bookId) {
@@ -158,7 +158,7 @@ static NSOperationQueue *queue;
                             appSecret:@"f29df781abdd4f49beca5a2194676ca4"];
     _mapManager = [[BMKMapManager alloc]init];
     BOOL ret = [_mapManager start:BMAPAPIKEY generalDelegate:nil];
-    if (!ret) {
+    if (ret == NO) {
         NSLog(@"manager start failed!");
     }
     
@@ -174,39 +174,59 @@ static NSOperationQueue *queue;
     
 
     
-
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     UIViewController *viewController1 = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
     UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
     navigationController1.delegate = self;
     [navigationController1 setNavigationBarHidden:YES];
-    
+    [viewController1 release];
+    viewController1 = nil;
     
     UIViewController *viewController2 = [[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil];
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:viewController2];
     [navigationController2 setNavigationBarHidden:YES];
+    [viewController2 release];
+    viewController2 = nil;
 
     
     UIViewController *viewController3 = [[ThirdViewController alloc] initWithNibName:@"ThirdViewController" bundle:nil];
     UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:viewController3];
     [navigationController3 setNavigationBarHidden:YES];
+    [viewController3 release];
+    viewController3 = nil;
 
+    
+    
     LocalEpubBookViewController *viewController4 = [[LocalEpubBookViewController alloc] initWithNibName:@"LocalEpubBookViewController" bundle:nil];
 //    UIViewController *viewController4 = [[ForthViewController alloc] initWithNibName:@"ForthViewController" bundle:nil];
     UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:viewController4];
     [navigationController4 setNavigationBarHidden:YES];
-    
+    [viewController4 release];
+    viewController4 = nil;
+
 
     
-    
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[navigationController1, navigationController2,navigationController3,navigationController4];
-    self.window.rootViewController = self.tabBarController;
+    UITabBarController *tbc = [[UITabBarController alloc] init];
+    tbc.viewControllers = @[navigationController1, navigationController2,navigationController3,navigationController4];
+    self.window.rootViewController = tbc;
+//    self.tabBarController = [[UITabBarController alloc] init];
+//    self.tabBarController.viewControllers = @[navigationController1, navigationController2,navigationController3,navigationController4];
+//    self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    [navigationController1 release];
+    navigationController1= nil;
+    [navigationController2 release];
+    navigationController2= nil;
+    [navigationController3 release];
+    navigationController3= nil;
+    [navigationController4 release];
+    navigationController4= nil;
     
+    [tbc release];
+    tbc = nil;
 
-    
     // 监测网络情况
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged:)
@@ -283,4 +303,9 @@ static NSOperationQueue *queue;
 }
 */
 
+-(void)dealloc{
+    [super dealloc];
+    self.tabBarController = nil;
+    self.window = nil;
+}
 @end

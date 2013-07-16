@@ -42,7 +42,28 @@
         [self.delegate bookViewBeTouched:self];
     }
 }
+-(UIButton *)delButton{
+    if (!_delButton) {
+        _delButton = [[UIButton alloc] initWithFrame:CGRectMake(-10, -7, 30, 30)];
+//        [_delButton setBackgroundColor:[UIColor blackColor]];
+        [_delButton setImage:[UIImage imageNamed:@"SinaWeibo.bundle/images/close"] forState:UIControlStateNormal];
+        [self addSubview:_delButton];
+        [_delButton addTarget:self action:@selector(deleteSelf) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _delButton;
+}
+-(void)deleteSelf{
+    if ([self.delegate respondsToSelector:@selector(bookViewBeDelete:)]) {
+        [self.delegate bookViewBeDelete:self];
 
+    }
+}
+-(void)editModelStart{
+    self.delButton.hidden = NO;
+}
+-(void)editModelEnd{
+    self.delButton.hidden = YES;
+}
 -(id)initWithFrame:(CGRect)frame withCoverImageUrl:(NSString *)coverImageUrl withLableName:(NSString *)lableName{
     self = [super initWithFrame:frame];
     if (self) {
@@ -172,16 +193,26 @@
 
 -(void)NetImageViewFinish:(NetImageView *)netImageView{
     self.isLoadImageFinish = YES;
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:1.75];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.imageView cache:YES];
     [self.imageView setImage:netImageView.image];
-    [self.activityIndicatorView stopAnimating];
+//    [UIView commitAnimations];
 
+    [self.activityIndicatorView stopAnimating];
 }
+
 -(void)loadImageViewWithImage:(UIImage *)image{
     if (!image) {
         return;
     }
     self.isLoadImageFinish = YES;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.75];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.imageView cache:YES];
     [self.imageView setImage:image];
+    [UIView commitAnimations];
+    
     [self.activityIndicatorView stopAnimating];
 }
 /*

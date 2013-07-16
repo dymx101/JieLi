@@ -5,6 +5,11 @@
 //  Created by 花 晨 on 12-10-12.
 //  Copyright (c) 2012年 中卡. All rights reserved.
 //
+#ifdef DEBUG
+#define DMLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+#else
+#define DMLog(...) do { } while (0)
+#endif
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
@@ -15,6 +20,9 @@
 #import "iflyMSC/SpeechUser.h"
 #import "iflyMSC/UpLoadController.h"
 #import "iflyMSC/IFlyRecognizeControl.h"
+
+
+
 
 #define APPID @"50b3125a"
 #define ENGINE_URL @"http://dev.voicecloud.cn:1028/index.htm"

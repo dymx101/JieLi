@@ -14,7 +14,7 @@
 #import "Chapter.h"
 #import "PicNameMc.h"
 #import "InAppJieLiIAPHelper.h"
-
+#import "HCTadBarController.h"
 
 @interface EPubViewController()
 @property (retain, nonatomic) IBOutlet UIView *topBar;
@@ -158,8 +158,18 @@
         return;
     }
     else if(buttonIndex == 1){
-        InAppJieLiIAPHelper *inapp = [InAppJieLiIAPHelper sharedHelper];
-        [inapp requestProducts];
+//        InAppJieLiIAPHelper *inapp = [InAppJieLiIAPHelper sharedHelper];
+//        [inapp requestProducts];
+        NSLog(@"试读购买");
+//        [self.navigationController pushViewController:<#(UIViewController *)#> animated:<#(BOOL)#>]
+        HCTadBarController *tabBarController = [[HCTadBarController alloc] init];
+        tabBarController.bookInfo = self.bookInfo;
+        
+        
+        tabBarController.hidesBottomBarWhenPushed = YES;
+        
+        [self.navigationController pushViewController:tabBarController animated:YES];
+
 
     }
     else{
@@ -440,7 +450,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
 }
 -(void)viewDidDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidUnload {
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
