@@ -32,6 +32,10 @@
 -(void)setType:(int)type{
     switch (type) {
         case DiyTopBarTypeNone:
+            self.header_left.hidden = YES;
+            self.header_right.hidden = YES;
+            self.backButton.hidden = YES;
+            self.collectButton.hidden = YES;
             break;
         case DiyTopBarTypeBack:
             self.backButton.hidden = NO;

@@ -125,7 +125,11 @@
         imageView.frame = CGRectMake(20+20*i , 10 , 36/2, 32/2);
         [self addSubview:imageView];        
     }
-    [self.userName setText:[dic objectForKey:@"userName"]];
+    NSString *userName_ =[dic objectForKey:@"userName"];
+    if (!userName_||[userName_ isEqualToString:@"(null)"]) {
+        userName_ = @"匿名";
+    }
+    [self.userName setText:userName_];
     [self.content setText:[dic objectForKey:@"content"]];
     [self.content setFont:[UIFont systemFontOfSize:14.f]];
     [self.content setNumberOfLines:0];

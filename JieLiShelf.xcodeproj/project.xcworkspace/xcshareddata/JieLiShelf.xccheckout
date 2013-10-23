@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5B6AEA2C-C0C2-4CB2-8E18-44CD19AEBA4E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>JieLiShelf</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D3B26BBE-E1F1-4EB0-B2B0-A57B2E142B57</key>
+		<string>https://github.com/huachen206/JieLi.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>JieLiShelf.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D3B26BBE-E1F1-4EB0-B2B0-A57B2E142B57</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/huachen206/JieLi.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D3B26BBE-E1F1-4EB0-B2B0-A57B2E142B57</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D3B26BBE-E1F1-4EB0-B2B0-A57B2E142B57</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JieLi</string>
+		</dict>
+	</array>
+</dict>
+</plist>

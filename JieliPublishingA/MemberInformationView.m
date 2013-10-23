@@ -37,7 +37,7 @@
     [self.disLogButton setImage:[PicNameMc grayBg:self.disLogButton title:@"注销"] forState:UIControlStateNormal];
 
     
-    
+    sexbb = @"0";
 
 }
 - (IBAction)disLog:(id)sender {
@@ -48,7 +48,7 @@
 
 - (IBAction)sexSelected:(id)sender {
     UIButton *btn = (UIButton *)sender;
-    sexbb = [NSString stringWithFormat:@"%d",btn.tag-ButtonTag];
+    sexbb = [[NSString alloc] initWithFormat:@"%d",btn.tag-ButtonTag];
     
     for (int i = 0; i<3; i++) {
         UIButton *button = (UIButton *)[self viewWithTag:i+ButtonTag];

@@ -12,6 +12,8 @@
 #import "RegViewController.h"
 #import "AppDelegate.h"
 #import "MemberAreaViewController.h"
+#import "ReadRulerViewController.h"
+
 @interface LogViewController (){
     
     IBOutlet DiyTopBar *myDiyTopBar;
@@ -91,8 +93,12 @@
 }
 
 - (IBAction)pushToReg:(id)sender {
-    RegViewController *viewController = [[RegViewController alloc] initWithNibName:@"RegViewController" bundle:nil];
-    [self.navigationController pushViewController:viewController animated:YES];
+    
+    ReadRulerViewController *vc = [[ReadRulerViewController alloc] initWithNibName:@"ReadRulerViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+//    RegViewController *viewController = [[RegViewController alloc] initWithNibName:@"RegViewController" bundle:nil];
+//    [self.navigationController pushViewController:viewController animated:YES];
 }
 - (void)viewDidLoad
 {

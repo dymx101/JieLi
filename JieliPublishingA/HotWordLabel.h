@@ -10,5 +10,5 @@
 
 @interface HotWordLabel : UILabel
 @property (nonatomic,strong) NSString* linkUrl;
-
+@property (nonatomic,strong) NSString* keyWord;
 @end

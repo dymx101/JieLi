@@ -169,8 +169,9 @@
         tabBarController.hidesBottomBarWhenPushed = YES;
         
         [self.navigationController pushViewController:tabBarController animated:YES];
-
-
+        UIButton *b = [[UIButton alloc] init];
+        b.tag = 3;
+        [tabBarController.tabBar buttonPressed:b];
     }
     else{
         

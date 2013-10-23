@@ -21,6 +21,8 @@ static CGFloat kBorderWidth = 10;
     NSInteger bookId;
     NSString *userId;
     NSString *accountName;
+    
+    BOOL isSending;
 }
 
 - (id)initWithBookId:(NSInteger )bId userId:(NSString *)uId accountName:(NSString *)aName
@@ -69,12 +71,17 @@ static CGFloat kBorderWidth = 10;
     return self;
 }
 -(void)sendCommentWith:(NSString *)content starNumber:(NSInteger)number{
+    if (isSending) {
+        return;
+    }
+    isSending = YES;
     CommentPoeration *op = [CommentPoeration sendWithTaget:self userId:userId name:accountName BookId:bookId content:content stars:number];
     op.delegate = self;
     [[AppDelegate shareQueue] addOperation:op];
 }
 
 -(void)sendCommentFinish:(id)r{
+    isSending = NO;
     NSLog(@"sendCommentFinish::::%@",r);
     NSString *result = [r objectForKey:@"result"];
     int a = [result intValue];
@@ -85,7 +92,7 @@ static CGFloat kBorderWidth = 10;
     else{
         mes = @"评论失败";
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读小栈"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读时空"
                                                     message:mes
                                                    delegate:self
                                           cancelButtonTitle:@"确定" otherButtonTitles:nil];

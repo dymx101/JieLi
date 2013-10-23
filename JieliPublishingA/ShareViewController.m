@@ -16,6 +16,7 @@
 
     IBOutlet WeiBoBar *sinaWeiBoBar;
     IBOutlet WeiBoBar *tenWeiBoBar;
+    IBOutlet WeiBoBar *weiXinBar;
 }
 
 @end
@@ -56,6 +57,14 @@
     tenWeiBoBar.delegate = self;
 //    [sinaWeiBoBar setTextWithLogeIn:@"绑定新浪微博" withShare:@"分享至新浪微博"];
     [tenWeiBoBar setImageU:[UIImage imageNamed:@"F_image_share_teng"] setImageB:[UIImage imageNamed:@"F_image_share_tengB"]];
+    
+    NSArray *nibw = [[NSBundle mainBundle] loadNibNamed:@"WeiBoBar" owner:self options:nil];
+    weiXinBar = [nibw objectAtIndex:0];
+    weiXinBar.weiBoStyle = KEyStyleOfWeiXin;
+    weiXinBar.delegate = self;
+    //    [sinaWeiBoBar setTextWithLogeIn:@"绑定新浪微博" withShare:@"分享至新浪微博"];
+//    [tenWeiBoBar setImageU:[UIImage imageNamed:@"F_image_share_teng"] setImageB:[UIImage imageNamed:@"F_image_share_tengB"]];
+
 
     id<ISSCredential> sinaC = [ShareSDK getCredentialWithType:ShareTypeSinaWeibo];
     
@@ -119,6 +128,12 @@
     }
 }
 -(void)shouQuan:(ShareType)type{
+    UIButton *iv = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+//    iv.backgroundColor = [UIColor redColor];
+//    iv.alpha = 0.4;
+//    iv.userInteractionEnabled = NO;
+    [self.view.superview.superview addSubview:iv];
+    
     id<ISSAuthOptions> op = [ShareSDK authOptionsWithAutoAuth:YES allowCallback:NO authViewStyle:SSAuthViewStylePopup viewDelegate:nil authManagerViewDelegate:nil];
     
     [ShareSDK authWithType:type options:op result:^(SSAuthState state, id<ICMErrorInfo> error) {
@@ -150,6 +165,10 @@
                     break;
             }
 
+        }
+        else if (state == SSAuthStateCancel){
+            NSLog(@"取消");
+            [iv removeFromSuperview];
         }
     }];
     
@@ -215,10 +234,13 @@
     sinaWeiBoBar = nil;
     [tenWeiBoBar release];
     tenWeiBoBar = nil;
+    [weiXinBar release];
+    weiXinBar = nil;
     [super viewDidUnload];
 }
 - (void)dealloc {
     [tenWeiBoBar release];
+    [weiXinBar release];
     [super dealloc];
 }
 @end

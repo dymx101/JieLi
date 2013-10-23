@@ -40,6 +40,7 @@
 // 工作就这样炼成了   http://www.jielibj.com/download.php?path=images/201305/1368083672567368490.epub
 //人生百忌 http://www.jielibj.com/download.php?path=images/201305/1368082963753484197.epub
     NSString *epubName = @"http://www.jielibj.com/download.php?path=images/201305/1368082963753484197.epub";
+    
     hcd = [HCDownLoad downLoadWithURL:[NSURL URLWithString:epubName]];
     hcd.delegate = self;
     [hcd start];
@@ -85,7 +86,7 @@
     
     BOOL isNew = YES;
     for (NSDictionary *d in array) {
-        if ([[d objectForKey:@"fileUrl"] isEqualToString:[dic objectForKey:@"fileUrl"]]) {
+        if ([[d objectForKey:@"bookInfoFile"] isEqualToString:[dic objectForKey:@"bookInfoFile"]]) {
             isNew = NO;
         }
     }
@@ -116,7 +117,7 @@
 
 }
 -(void)loadBookInfo:(BookInfo *)info{
-    if ([info.bookBrief length]==0) {
+    if (!info.bookBrief||[info.bookBrief length]==0) {
         info.bookBrief = @"此书无简介";
     }
 

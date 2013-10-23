@@ -58,8 +58,13 @@
     self.coverImage = nil;
     self.coverImage = niv;
     
-    [self.bookName setText:[self.bookName.text stringByAppendingString:info.bookName]];
-    [self.authorName setText:[self.authorName.text stringByAppendingString:info.bookAuthor]];
+    
+    if (info.bookName) {
+        [self.bookName setText:[self.bookName.text stringByAppendingString:info.bookName]];
+    }
+    if (info.bookAuthor) {
+        [self.authorName setText:[self.authorName.text stringByAppendingString:info.bookAuthor]];
+    }
     [self.publisher setText:[self.publisher.text stringByAppendingString:@"接力出版社"]];
     [self.price setText:[self.price.text stringByAppendingString:[NSString stringWithFormat:@"%0.2f",info.bookPrice]]];
 

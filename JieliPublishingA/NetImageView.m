@@ -132,7 +132,6 @@ static NSOperationQueue *queue;
                 [[ImageOperation shareQueue] addOperation:io];
             }
         }
-
     }
     return self;
 }

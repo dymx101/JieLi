@@ -15,6 +15,9 @@
 
 #import "CustomNavigationBar.h"
 #import "Reachability.h"
+#import "WXApi.h"
+#import <QQConnection/QQConnection.h>
+#import <QQApi/QQApi.h>
 
 #import "LocalEpubBookViewController.h"
 //#import "DOUAPIEngine.h"
@@ -154,6 +157,10 @@ static NSOperationQueue *queue;
                                   appSecret:@"ae36f4ee3946e1cbb98d6965b0b2ff5c"
                                 redirectUri:@"http://www.sharesdk.cn"];
     
+    
+    //添加微信应用
+//    [ShareSDK connectQQWithAppId:@"wx2bca6819e8a7cfa9" qqApiCls:[WXApi class]];
+    
     [ShareSDK connectRenRenWithAppKey:@"fc5b8aed373c4c27a05b712acba0f8c3"
                             appSecret:@"f29df781abdd4f49beca5a2194676ca4"];
     _mapManager = [[BMKMapManager alloc]init];
@@ -243,7 +250,7 @@ static NSOperationQueue *queue;
     NetworkStatus status = [curReach currentReachabilityStatus];
     
     if (status == NotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读小栈"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读时空"
                                                         message:@"当前无网络连接，请检查网络连接"
                                                        delegate:nil
                                               cancelButtonTitle:@"确定" otherButtonTitles:nil];

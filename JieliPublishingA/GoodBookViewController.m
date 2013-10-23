@@ -287,6 +287,7 @@ enum {
         return;
     }
     BookInfo *info = [self.bookShelfImageList objectAtIndex:index-3];
+    NSLog(@"%@",info);
     
     HCTadBarController *tabBarController = [[HCTadBarController alloc] init];
     tabBarController.bookInfo = info;

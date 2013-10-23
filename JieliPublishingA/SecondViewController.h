@@ -35,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *myBgImageView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *sBackground;
+@property (retain, nonatomic) IBOutlet UIButton *seachButton;
 
 @property (strong,nonatomic) AppDelegate *app;
 @property (strong,nonatomic) DataBrain *dataBrain;

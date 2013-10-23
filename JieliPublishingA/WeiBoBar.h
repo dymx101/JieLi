@@ -10,6 +10,7 @@
 
 #define KeyStyleOfSina @"sina"
 #define KeyStyleofTen @"ten"
+#define KEyStyleOfWeiXin @"weixin"
 enum {
     LogInState,
     ShareState,

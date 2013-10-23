@@ -13,6 +13,7 @@
 #import "PicNameMc.h"
 #import "InAppJieLiIAPHelper.h"
 #import "EPubViewController.h"
+#import "GetProductsList.h"
 #define kDocument_Folder [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
 @interface BuyViewController (){
@@ -37,8 +38,21 @@
 -(void)viewDidUnload{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
-    
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    if (!op.isFinished) {
+        [op cancel];
+        
+    }
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductsLoadedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
+}
+//-(void)viewDidAppear:(BOOL)animated{
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchased:) name:kProductPurchasedNotification object:nil];
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,8 +70,27 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)buy{
-    InAppJieLiIAPHelper *inapp = [InAppJieLiIAPHelper sharedHelper];
-    [inapp requestProducts];
+    NSString *identifier = [NSString stringWithFormat:@"com.%06d",self.bookInfo.bookId];
+    [GetProductsList getProductsList:^(BOOL success, id result) {
+        NSSet *sset = (NSSet *)result;
+        BOOL isHave = NO;
+        for (NSString *sss in sset) {
+            if ([identifier isEqualToString:sss]) {
+                [[[InAppJieLiIAPHelper alloc] initWithProductIdentifiers:[NSSet setWithObject:identifier]] requestProducts];
+                isHave = YES;
+            }
+        }
+        if (!isHave) {
+            NSLog(@"不提供下载");
+            UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"" message:@"本书暂不提供下载" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles: nil];
+            [al show];
+
+        }
+    }];
+    
+    
+//    InAppJieLiIAPHelper *inapp = [InAppJieLiIAPHelper sharedHelper];
+//    [inapp requestProducts];
 }
 -(void)productsLoaded:(NSNotification *)notification{
     NSObject *obj = [notification object];
@@ -80,6 +113,8 @@
     // 大鼻子    http://www.jielibj.com/download.php?path=images/201305/1368083752379138435.epub
     // 工作就这样炼成了   http://www.jielibj.com/download.php?path=images/201305/1368083672567368490.epub
     //人生百忌 http://www.jielibj.com/download.php?path=images/201305/1368082963753484197.epub
+    
+//    NSString *epubName = self.bookInfo.epub_all;
     NSString *epubName = @"http://www.jielibj.com/download.php?path=images/201305/1368082963753484197.epub";
     hcd = [HCDownLoad downLoadWithURL:[NSURL URLWithString:epubName]];
     hcd.delegate = self;
@@ -149,12 +184,6 @@
 //    [[AppDelegate shareQueue] ]
 
 
-}
--(void)viewDidDisappear:(BOOL)animated{
-    if (!op.isFinished) {
-        [op cancel];
-
-    }
 }
 #pragma mark
 #pragma mark -- 

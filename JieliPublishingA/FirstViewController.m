@@ -52,7 +52,7 @@
     [super viewDidLoad];
     
     [self.myDiyTopBar setType:DiyTopBarTypeNone];
-    [self.myDiyTopBar.myTitle setText:@"接力阅读小栈"];
+    [self.myDiyTopBar.myTitle setText:@"接力阅读时空"];
     
     NSArray *images = [PicNameMc homeIcons];
     NSArray *buttons = [NSArray arrayWithObjects:self.firstButton,self.secondButton,self.thridButton,self.forthButton,self.fifthButton,self.sixButton, nil];
@@ -110,7 +110,7 @@
     if (([Reachability reachabilityForInternetConnection].currentReachabilityStatus == NotReachable) &&
         ([Reachability reachabilityForLocalWiFi].currentReachabilityStatus == NotReachable)) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读小栈"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读时空"
                                                         message:@"当前无网络连接，请检查网络连接"
                                                        delegate:nil
                                               cancelButtonTitle:@"确定" otherButtonTitles:nil];

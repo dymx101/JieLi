@@ -14,4 +14,6 @@
 @property (retain, nonatomic) IBOutlet HCBookShelf *bookShelf;
 @property (retain,nonatomic) NSMutableArray *ebooks;
 @property (retain, nonatomic) IBOutlet UIImageView *backGroundImageView;
+
+@property (retain,nonatomic) NSMutableArray *ebookViews;
 @end

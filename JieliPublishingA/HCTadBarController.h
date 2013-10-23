@@ -26,6 +26,7 @@
 @property (nonatomic,assign) id<HCTabBarDelegate> delegate;
 @property (nonatomic, assign) NSUInteger            selectedIndex;
 -(void)reSetSelectedImageViewCenterWithButtonTag:(int)index animated:(BOOL)animated;
+-(void)buttonPressed:(UIButton *)button;
 
 @end
 
@@ -48,5 +49,6 @@ typedef enum {
 @property (nonatomic,strong) HCTabBar *tabBar;
 @property (nonatomic, assign) NSUInteger            selectedIndex;
 @property (nonatomic,strong) BookInfo *bookInfo;
+-(void)setSelectedIndex:(NSUInteger)selectedIndex;
 
 @end

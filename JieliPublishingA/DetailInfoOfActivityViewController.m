@@ -11,6 +11,7 @@
 #import "PicNameMc.h"
 #import "DataBrain.h"
 #import "ShareViewController.h"
+#import "LogViewController.h"
 //#import "WebViewController.h"
 
 static NSString * const kAPIKey = @"078978195e42393f169c684c1ac6abbd";
@@ -44,7 +45,16 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
 
 }
 - (IBAction)jion:(id)sender {
-    NSString *urlString = [NSString stringWithFormat:@"?c=Activity&m=setDbJoinNum&id=%d&join_num=1",self.mainId];
+    
+    NSString *userid = [AppDelegate dUserId];
+    if (!userid) {
+        LogViewController *viewController = [[LogViewController alloc] initWithNibName:@"LogViewController" bundle:nil];
+        viewController.finishToPop = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"?c=Activity&m=setDbJoinNum&id=%d&user_id=%@",self.mainId,userid];
     BasicOperation *op = [BasicOperation basicOperationWithUrl:urlString withTaget:self select:@selector(jionFinish:)];
     [[AppDelegate shareQueue] addOperation:op];
     
@@ -60,7 +70,8 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
         self.joinNumber ++;
     }
     else{
-        
+        UIAlertView *alv = [[UIAlertView alloc] initWithTitle:@"活动详情" message:@"请不要重复参加" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alv show];
     }
     
 }
@@ -146,8 +157,8 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
     [self.myTime setText:[self.myTime.text stringByAppendingString:[NSString stringWithFormat:@"%@--%@",[result objectForKey:@"begin_time"],[result objectForKey:@"end_time"]]] ];
     [self.myAdress setText:[self.myAdress.text stringByAppendingString:[result objectForKey:@"address"]]];
     [self.myTextView setText:[result objectForKey:@"content"]];
-    CGSize size = [self.myTextView.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(320, self.myTextView.text.length) lineBreakMode:UILineBreakModeWordWrap];
-    self.myTextView.frame = CGRectMake(self.myTextView.frame.origin.x, self.myTextView.frame.origin.y, [UIScreen mainScreen].bounds.size.width, size.height+20);
+    CGSize size = [self.myTextView.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(296, self.myTextView.text.length) lineBreakMode:UILineBreakModeWordWrap];
+    self.myTextView.frame = CGRectMake(self.myTextView.frame.origin.x, self.myTextView.frame.origin.y, 296, size.height+20);
     self.myScrollView.contentSize = CGSizeMake(0, MAX(self.myTextView.frame.origin.y+size.height+20, [UIScreen mainScreen].bounds.size.height));
     
     NSDictionary *dic = [result objectForKey:@"owner"];

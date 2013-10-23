@@ -11,9 +11,13 @@
 #import "PicNameMc.h"
 #import "AppDelegate.h"
 #import "LogViewController.h"
+#import "MyScores.h"
+
 @interface MemberAreaViewController (){
     NSArray *arrayOfCells;
     UIScrollView *scrollView;
+    MyScores *myScores;
+    
 }
 @property (strong,nonatomic) UIView *bgImageView;
 
@@ -52,7 +56,7 @@
     UIImage *image = nil;
     self.currentType = index-1;
     [self.tableView reloadData];
-    scrollView.hidden = YES;
+    myScores.hidden = YES;
 
     if (index ==1) {
         self.tableView.hidden = YES;
@@ -63,7 +67,8 @@
         self.informationView.hidden = YES;
         if (index == 3) {
             self.tableView.hidden = YES;
-            scrollView.hidden = NO;
+//            scrollView.hidden = NO;
+            myScores.hidden = NO;
         }
     }
     switch (index) {
@@ -111,16 +116,22 @@
     self.barButon3.tag = 3;
     self.barButon4.tag = 4;
     
-    scrollView = [[UIScrollView alloc] initWithFrame:self.tableView.frame];
-    UIImageView *jiFen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"The rules"]];
-    jiFen.frame = CGRectMake(5, 0, 618/2, 1795/2);
-    [scrollView addSubview:jiFen];
-    scrollView.hidden = YES;
-    [self.myMemberAreaView addSubview:scrollView];
-    scrollView.contentSize = jiFen.frame.size;
-    [self.myMemberAreaView bringSubviewToFront:self.meberAreaTopBar];
-    [scrollView setShowsVerticalScrollIndicator:NO];
+//    scrollView = [[UIScrollView alloc] initWithFrame:self.tableView.frame];
+//    UIImageView *jiFen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"The rules"]];
+//    jiFen.frame = CGRectMake(5, 0, 618/2, 1795/2);
+//    [scrollView addSubview:jiFen];
+//    scrollView.hidden = YES;
+//    [self.myMemberAreaView addSubview:scrollView];
+//    scrollView.contentSize = jiFen.frame.size;
+//    [self.myMemberAreaView bringSubviewToFront:self.meberAreaTopBar];
+//    [scrollView setShowsVerticalScrollIndicator:NO];
     
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MyScores" owner:self options:nil];
+    myScores = [nib objectAtIndex:0];
+    myScores.frame = self.tableView.frame;
+    [self.myMemberAreaView addSubview:myScores];
+    myScores.hidden = YES;
+    [self.myMemberAreaView bringSubviewToFront:self.meberAreaTopBar];
     
     
     self.myMemberAreaView.hidden = YES;
@@ -215,6 +226,9 @@
     self.informationView = view;
     [self.myMemberAreaView insertSubview:view belowSubview:self.meberAreaTopBar];
     self.myMemberAreaView.hidden = NO;
+    
+    //
+    [myScores loadInfo:dic];
     
     
     

@@ -21,6 +21,7 @@
         target = [cv retain];
         type = CommentSend;
         NSString *urlString = [NSString stringWithFormat:@"?c=Book&m=sendComment&userId=%@&name=%@&bookId=%d&content=%@&star=%d",userid,name,bookid,content,starsnumber];
+        
 //        url = [NSURL URLWithString:[[BaseURL stringByAppendingString:urlString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 //        url = [NSURL URLWithString:[BaseURL stringByAppendingString:urlString]];
         url = [NSURL URLWithString:[[BaseURL stringByAppendingString:urlString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];

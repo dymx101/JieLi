@@ -45,7 +45,9 @@
             [purchasedProducts addObject:productIdentifier];
             NSLog(@"已经购买:%@",productIdentifier);
         }
+        else{
         NSLog(@"没有购买:%@",productIdentifier);
+        }
     }
     self.purchasedProducts = purchasedProducts;
 }
@@ -73,13 +75,15 @@ static bool newBuy;
 
 - (void)buyProductIdentifier:(SKProduct *)product {
     
-    NSLog(@"Buying %@...", product);
+    NSLog(@"Buying %@...", product.productIdentifier);
 //    product.productIdentifier;
     
     
     if ([self.purchasedProducts containsObject:product.productIdentifier]) {
         UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"" message:@"您已购买过此书" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles: nil];
         [al show];
+        [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+
         return;
     }
     
@@ -117,11 +121,11 @@ static bool newBuy;
     NSLog(@"Toggling flag for: %@", productIdentifier);
     [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:productIdentifier];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [_purchasedProducts addObject:productIdentifier];
+//    [_purchasedProducts addObject:productIdentifier];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kProductPurchasedNotification object:productIdentifier];
     
-    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+//    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 
     
 }
@@ -130,6 +134,7 @@ static bool newBuy;
     NSString * productIdentifier = transaction.payment.productIdentifier;
     NSString * receipt = [transaction.transactionReceipt base64EncodedString];
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 
     [self provideContent: transaction.payment.productIdentifier];
     
@@ -177,8 +182,10 @@ static bool newBuy;
 }
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     // 对于已购商品，处理恢复购买的逻辑
-    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     [self provideContent: transaction.payment.productIdentifier];
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+
 
 }
 

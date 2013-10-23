@@ -245,23 +245,10 @@
         }
         else if (indexPath.row ==1){
             NSString *mes = [NSString stringWithFormat:@"清除缓存%@ MB",[self calculatedCapacity]];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"缓存清空" message:mes delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"缓存清空" message:mes delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+            alertView.tag = 10020;
             [alertView show];
             
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentsDirectory = [paths objectAtIndex:0];
-            //更改到待操作的目录下
-            [fileManager changeCurrentDirectoryPath:[documentsDirectory stringByExpandingTildeInPath]];
-            
-            
-            NSArray *fileList = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-            NSLog(@"%@",fileList);
-            for (int i = 0; i<[fileList count]; i++) {
-                [fileManager removeItemAtPath:[fileList objectAtIndex:i] error:nil];
-                
-            }
 
         }
     }
@@ -293,15 +280,36 @@
     }
 
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    switch (buttonIndex) {
-        case 0:
-            [self.myTableView reloadData];
-            break;
-        default:
-            break;
-    }
+-(void)removeItems{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    //更改到待操作的目录下
+    [fileManager changeCurrentDirectoryPath:[documentsDirectory stringByExpandingTildeInPath]];
     
+    
+    NSArray *fileList = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    NSLog(@"%@",fileList);
+    for (int i = 0; i<[fileList count]; i++) {
+        [fileManager removeItemAtPath:[fileList objectAtIndex:i] error:nil];
+        
+    }
+
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 10020) {
+        switch (buttonIndex) {
+            case 0:
+                [self removeItems];
+                [self.myTableView reloadData];
+
+                break;
+            case 1:
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 

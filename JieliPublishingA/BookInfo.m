@@ -70,6 +70,31 @@
           withBookEpubUnall:(NSString *)epubUnall
 {
     if (self = [super init]) {
+        if ((NSNull *)bookName == [NSNull null]) {
+            bookName = nil;
+        }
+        if ((NSNull *)bookAuthor == [NSNull null]) {
+            bookAuthor = nil;
+        }
+        if ((NSNull *)bookDate == [NSNull null]) {
+            bookDate = nil;
+        }
+        if ((NSNull *)bookImage == [NSNull null]) {
+            bookImage = nil;
+        }
+        if ((NSNull *)bookThumb == [NSNull null]) {
+            bookThumb = nil;
+        }
+        if ((NSNull *)bookBrief == [NSNull null]) {
+            bookBrief = nil;
+        }
+        if ((NSNull *)epubAll ==[NSNull null]) {
+            epubAll = nil;
+        }
+        if ((NSNull *)epubUnall == [NSNull null]) {
+            epubUnall = nil;
+        }
+        
         self.bookId = bookId;
         self.bookImage = bookImage;
         self.bookName = bookName;
@@ -114,5 +139,7 @@
     }
     return self;
 }
-
+-(NSString *)description{
+    return ([NSString stringWithFormat:@"bookInfo:\n bookid:%d\n bookName:%@\n bookAuthor:%@\n bookDate:%@\n bookPrice:%f\n bookImage:%@\n bookThumb:%@\n bookBrief:%@\n bookClichCount:%d\n epub_all:%@\n epub_unall%@\n",_bookId,_bookName,_bookAuthor,_bookDate,_bookPrice,_bookImage,_bookThumb,_bookBrief,_bookClickCount,_epub_all,_epub_unall]);
+}
 @end

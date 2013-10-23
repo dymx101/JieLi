@@ -117,6 +117,7 @@
         [label setFont:[UIFont fontWithName:@"Arial" size:fountSize]];
         label.center = center;
         label.linkUrl = [objs objectAtIndex:4];
+        label.keyWord = [objs objectAtIndex:0];
         
         label.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelLinkTo:)];
@@ -130,20 +131,40 @@
     }
 }
 -(void)labelLinkTo:(UITapGestureRecognizer *)tap{
+    
+    UIActivityIndicatorView *aiv;
+    aiv = (UIActivityIndicatorView *)[self.myDiyTopBar viewWithTag:10010];
+    if (aiv) {
+        [aiv startAnimating];
+    }
+    else{
+        aiv = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(320-40, 0, 40, 40)];
+        [self.myDiyTopBar addSubview:aiv];
+        aiv.tag = 10010;
+        [aiv startAnimating];
+    }
+
+    
     HotWordLabel *label = (HotWordLabel *)tap.view;
     
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.myBgImageView.frame];
-    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:label.linkUrl]];
-    [webView loadRequest:req];
-    [self.view addSubview:webView];
-    
-    self.webView = webView;
-    [webView release];
-    webView = nil;
+    NSString *keyWord = label.keyWord;
+    self.myTextField.text = label.keyWord;
+    SearchPoeration *op = [[SearchPoeration alloc] initWithKeyWord:keyWord];
+    op.delegate = self;
+    [[AppDelegate shareQueue] addOperation:op];
 
-    [self.myDiyTopBar setType:DiyTopBarTypeBack];
-    [self.myDiyTopBar.backButton addTarget:self action:@selector(cancelWebView) forControlEvents:UIControlEventTouchUpInside];
-    self.myDiyTopBar.backButton.hidden = NO;
+//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.myBgImageView.frame];
+//    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:label.linkUrl]];
+//    [webView loadRequest:req];
+//    [self.view addSubview:webView];
+//    
+//    self.webView = webView;
+//    [webView release];
+//    webView = nil;
+//
+//    [self.myDiyTopBar setType:DiyTopBarTypeBack];
+//    [self.myDiyTopBar.backButton addTarget:self action:@selector(cancelWebView) forControlEvents:UIControlEventTouchUpInside];
+//    self.myDiyTopBar.backButton.hidden = NO;
     
 }
 
@@ -205,6 +226,17 @@
     }
 }
 - (void)search {
+    UIActivityIndicatorView *aiv;
+    aiv = (UIActivityIndicatorView *)[self.myDiyTopBar viewWithTag:10010];
+    if (aiv) {
+        [aiv startAnimating];
+    }
+    else{
+    aiv = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(320-40, 0, 40, 40)];
+    [self.myDiyTopBar addSubview:aiv];
+    aiv.tag = 10010;
+    [aiv startAnimating];
+    }
     NSString *searchString = [self deleteKongke:self.myTextField.text];
     int number = searchString.length;
 
@@ -219,7 +251,25 @@
 }
 
 -(void)finishPoeration:(id)result{
+    UIActivityIndicatorView *aiv = (UIActivityIndicatorView *)[self.myDiyTopBar viewWithTag:10010];
+    [aiv stopAnimating];
+    [aiv removeFromSuperview];
+    aiv = nil;
+
     if (!result) {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"图书搜索" message:@"没有搜索到相关内容" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [av show];
+
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, 367)];
+//        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://book.douban.com/subject_search?search_text=%@&cat=1001",self.myTextField.text]];
+        NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://book.douban.com/subject_search?search_text=%@&cat=1001",[self.myTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+//        NSURL *url = [NSURL URLWithString:@"http://book.douban.com/subject_search?search_text=%E5%A4%A7%E4%BA%BA&cat=1001"];
+        [webView loadRequest:[[NSURLRequest alloc] initWithURL:url]];
+        webView.tag = 30010;
+        [self.view addSubview:webView];
+        
+        [self.myDiyTopBar setType:DiyTopBarTypeBack];
+        [self.myDiyTopBar.backButton addTarget:self action:@selector(removeWebView) forControlEvents:UIControlEventTouchUpInside];
         return;
     }
     NSLog(@"%@",result);
@@ -241,6 +291,13 @@
         [self.view addSubview:self.tC.tableView];
 }
 
+-(void)removeWebView{
+    UIWebView *webView = (UIWebView *)[self.view viewWithTag:30010];
+    [webView removeFromSuperview];
+    webView = nil;
+    
+    [self.myDiyTopBar setType:DiyTopBarTypeNone];
+}
 -(void)pushOut:(HCTadBarController *)tab{
     [self.navigationController pushViewController:tab animated:YES];
 }
@@ -336,7 +393,12 @@
     [self setMyBgImageView:nil];
     [self setMyDiyTopBar:nil];
     [self setSBackground:nil];
+    [self setSeachButton:nil];
     [super viewDidUnload];
 }
 
+- (void)dealloc {
+    [_seachButton release];
+    [super dealloc];
+}
 @end

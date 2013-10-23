@@ -34,8 +34,26 @@
     [self.diyTopBar.collectButton addTarget:self action:@selector(faSong) forControlEvents:UIControlEventTouchUpInside];
     
 }
+static NSString *text = nil;
 -(void)faSong{
+    NSString *avTitle = @"发送成功";
+    if (![self.textView.text length]) {
+        avTitle = @"内容不能为空";
+    }
+    else{
+        if (text && [text isEqualToString:self.textView.text]) {
+            avTitle = @"请不要重复发送同样的内容";
+        }
+        else{
+            text = [self.textView.text copy];
+        }
+    }
     
+    [self.textView resignFirstResponder];
+    [self.textFildA resignFirstResponder];
+    
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"意见反馈" message:avTitle delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [av show];
 }
 -(void)popBack{
     [self.navigationController popViewControllerAnimated:YES];

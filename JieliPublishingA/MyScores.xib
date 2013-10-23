@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1280" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="MyScores">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="330"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" id="4cZ-GL-Fg9">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="330"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Wp-xB-hss">
+                            <rect key="frame" x="12" y="86" width="300" height="75"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="积分详情" backgroundImage="score1.png">
+                                <color key="titleColor" red="0.86274516582489014" green="0.34117648005485535" blue="0.18039216101169586" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="scoreDetail:" destination="1" eventType="touchUpInside" id="I87-6L-iYw"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="F_image_menberPhoto.png" id="TtC-jJ-u55">
+                            <rect key="frame" x="247" y="20" width="53" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nE5-yw-0FP">
+                            <rect key="frame" x="20" y="20" width="191" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ba9-yC-1pc">
+                            <rect key="frame" x="20" y="52" width="191" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8Gx-BX-XJp">
+                            <rect key="frame" x="12" y="169" width="300" height="75"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="积分规则" backgroundImage="score2.png">
+                                <color key="titleColor" red="0.86274516580000005" green="0.34117648010000001" blue="0.180392161" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="scroeRule:" destination="1" eventType="touchUpInside" id="BgX-vE-dcv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nKG-tj-Ves">
+                            <rect key="frame" x="12" y="252" width="300" height="75"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="积分兑换" backgroundImage="score3.png">
+                                <color key="titleColor" red="0.86274516580000005" green="0.34117648010000001" blue="0.180392161" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="z1Q-yC-Sol">
+                            <rect key="frame" x="320" y="0.0" width="320" height="330"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <gestureRecognizers/>
+                            <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="1" id="XYt-Ba-FfO"/>
+                                <outlet property="delegate" destination="1" id="W20-bW-yNM"/>
+                                <outletCollection property="gestureRecognizers" destination="728-7a-xvv" appends="YES" id="Fdt-ag-KQI"/>
+                            </connections>
+                        </tableView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="YNr-I4-76t">
+                            <rect key="frame" x="320" y="0.0" width="320" height="330"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="The rules.png" id="vDM-Qx-LLt">
+                                    <rect key="frame" x="5" y="0.0" width="309" height="897"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="NZt-l3-rbm" appends="YES" id="y4O-EA-i6T"/>
+                                    </connections>
+                                </imageView>
+                            </subviews>
+                        </scrollView>
+                    </subviews>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="accuntLable" destination="nE5-yw-0FP" id="62M-QK-h3Z"/>
+                <outlet property="detailTableView" destination="z1Q-yC-Sol" id="O7Z-Sh-m4U"/>
+                <outlet property="myScrollView" destination="4cZ-GL-Fg9" id="Pat-ZF-v90"/>
+                <outlet property="ruleScrollView" destination="YNr-I4-76t" id="Bgf-QZ-zNe"/>
+                <outlet property="scoreLable" destination="Ba9-yC-1pc" id="CEe-Gq-rzB"/>
+            </connections>
+        </view>
+        <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="NZt-l3-rbm">
+            <connections>
+                <action selector="ruleBack:" destination="1" id="AH6-ht-15s"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="728-7a-xvv">
+            <connections>
+                <action selector="detailBack:" destination="1" id="2He-9o-o9W"/>
+            </connections>
+        </swipeGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="F_image_menberPhoto.png" width="53" height="53"/>
+        <image name="The rules.png" width="618" height="1795"/>
+        <image name="score1.png" width="600" height="150"/>
+        <image name="score2.png" width="600" height="150"/>
+        <image name="score3.png" width="600" height="150"/>
+    </resources>
+</document>

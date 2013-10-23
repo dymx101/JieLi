@@ -71,6 +71,16 @@
     [super viewDidAppear:animated];
     self.ebooks = [NSMutableArray arrayWithContentsOfFile:[kDocument_Folder stringByAppendingPathComponent:@"epubBooksList.plist"]];
     NSLog(@"%@",self.ebooks);
+    self.ebookViews = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in self.ebooks) {
+        NSString *filename = [dic objectForKey:@"bookInfoFile"];
+        
+        BookInfo *bookInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
+        BookView *bv = [BookView BookViewWithBookInfo:bookInfo];
+        [self.ebookViews addObject:bv];
+    }
+    
+    
     [self.bookShelf reloadData];
     
 }
@@ -85,14 +95,14 @@
 }
 //@"bookName",@"bookThumb",@"fileUrl"
 -(BookView *)bookViewForIndex:(NSInteger)index{
-    NSDictionary *dic = [self.ebooks objectAtIndex:index];
-    NSString *filename = [dic objectForKey:@"bookInfoFile"];
-    
-    BookInfo *bookInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
-
-//    BookView *bv = [[BookView alloc] initWithFrame:CGRectMake(0, 0, ImageViewWith, ImageViewHight+LabelHight) withCoverImageUrl:bookInfo.bookThumb withLableName:bookInfo.bookName];
-    BookView *bv = [BookView BookViewWithBookInfo:bookInfo];
-    return bv;
+//    NSDictionary *dic = [self.ebooks objectAtIndex:index];
+//    NSString *filename = [dic objectForKey:@"bookInfoFile"];
+//    
+//    BookInfo *bookInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
+//
+//    BookView *bv = [BookView BookViewWithBookInfo:bookInfo];
+//    return bv;
+    return [self.ebookViews objectAtIndex:index];
 }
 
 
@@ -115,6 +125,7 @@
 -(void)bookshelf:(HCBookShelf *)bookShelf deleteAtIndex:(NSInteger)index{
     [self.ebooks removeObjectAtIndex:index];
     [self.ebooks writeToFile:[kDocument_Folder stringByAppendingPathComponent:@"epubBooksList.plist"] atomically:YES];
+    [self.ebookViews removeObjectAtIndex:index];
     [self.bookShelf reloadData];
 
 }

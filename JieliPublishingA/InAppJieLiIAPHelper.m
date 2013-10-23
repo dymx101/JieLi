@@ -18,18 +18,21 @@ static InAppJieLiIAPHelper * _sharedHelper;
     _sharedHelper = [[InAppJieLiIAPHelper alloc] init];
     return _sharedHelper;
 }
-- (id)init {
-    
-    NSSet *productIdentifiers = [NSSet setWithObjects:
-                                 @"com.t1",
-                                 @"com.t2",
-                                 nil];
-    
-    if ((self = [super initWithProductIdentifiers:productIdentifiers])) {
-        
-        
-    }
-    return self;
-    
-}
+//- (id)init {
+//    
+//    NSSet *productIdentifiers = [NSSet setWithObjects:
+//                                 @"com.t1",
+//                                 @"com.t2",
+//                                 @"com.000396",
+//                                 @"com.000380",
+//                                 @"com.000360",
+//                                 nil];
+//    
+//    if ((self = [super initWithProductIdentifiers:productIdentifiers])) {
+//        
+//        
+//    }
+//    return self;
+//    
+//}
 @end

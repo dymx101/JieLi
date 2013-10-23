@@ -25,7 +25,7 @@
         self.title = NSLocalizedString(@"收藏", @"收藏");
         self.tabBarItem.image = [UIImage imageNamed:@"tabBar_3"];
         // Custom initialization
-
+        
     }
     return self;
 }
@@ -120,7 +120,7 @@
     if (([Reachability reachabilityForInternetConnection].currentReachabilityStatus == NotReachable) &&
         ([Reachability reachabilityForLocalWiFi].currentReachabilityStatus == NotReachable)) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读小栈"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"接力阅读时空"
                                                         message:@"当前无网络连接，请检查网络连接"
                                                        delegate:nil
                                               cancelButtonTitle:@"确定" otherButtonTitles:nil];

@@ -128,7 +128,8 @@ static float height =-1;
     HCTadBarController *tabBarController = [[HCTadBarController alloc] init];
     tabBarController.bookInfo = info;
     
-    
+//    NSLog(@"\n%@\n%@",info.epub_all,info.epub_unall);
+    NSLog(@"%@",info);
     ContentViewController *vc1 = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     vc1.tabBarController = tabBarController;
     ShareViewController *vc2 = [[ShareViewController alloc] initWithNibName:@"ShareViewController" bundle:nil];

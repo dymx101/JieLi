@@ -48,12 +48,16 @@
         [self addSubview:self.proGressView];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((self.frame.size.width - 140)/2, 80, 140, 40)];
-        [label setText:@"正在下载，请稍候..."];
+        [label setText:@"读取中，请稍候..."];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextColor:[UIColor whiteColor]];
         [label setTextAlignment:NSTextAlignmentCenter];
 //        [label setFont:[[UIFont alloc] fontWithSize:14]];
         [self addSubview:label];
+        
+        
+        
+        
         
     }
     return self;
