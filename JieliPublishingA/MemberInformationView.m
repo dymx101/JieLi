@@ -325,13 +325,13 @@
         
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y+80, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, 0, self.editView.frame.size.width, self.editView.frame.size.height);
         [UIView commitAnimations];
     }
     else if(textField.tag ==4){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y+120, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, 0, self.editView.frame.size.width, self.editView.frame.size.height);
         [UIView commitAnimations];
     }
 
@@ -344,7 +344,7 @@
     if (textField.tag == 2) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y-40, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, -40, self.editView.frame.size.width, self.editView.frame.size.height);
         self.birthdayPicker.frame = CGRectMake(0, 164, 320, self.birthdayPicker.frame.size.height);
         [UIView commitAnimations];
         self.birthdaySureButton.hidden = NO;
@@ -353,13 +353,13 @@
     else if(textField.tag ==3){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y-80-30, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, -80-30, self.editView.frame.size.width, self.editView.frame.size.height);
         [UIView commitAnimations];
     }
     else if(textField.tag ==4){
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:.3f];
-        self.editView.frame = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y-120, self.editView.frame.size.width, self.editView.frame.size.height);
+        self.editView.frame = CGRectMake(self.editView.frame.origin.x, -120-30, self.editView.frame.size.width, self.editView.frame.size.height);
         [UIView commitAnimations];
     }
 
@@ -392,7 +392,13 @@
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    if(textField.tag ==3){
+        if (![self validateEmail:textField.text]) {
+            NSLog(@"请输入合法的email地址");
+            UIAlertView *ale = [[UIAlertView alloc] initWithTitle:@"请输入合法的email地址" message:nil delegate:self cancelButtonTitle:@"关闭" otherButtonTitles: nil];
+            [ale show];
+        }
+    }
 }// may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
 
 @end

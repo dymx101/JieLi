@@ -177,6 +177,8 @@ static NSArray *actionBtnTexts;
         ContentViewController *vc1 = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
         vc1.tabBarController = self;
         ShareViewController *vc2 = [[ShareViewController alloc] initWithNibName:@"ShareViewController" bundle:nil];
+        vc2.bookId = [NSString stringWithFormat:@"%d",self.bookInfo.bookId];
+
         CommentViewController *vc3 = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
         vc3.delegate = self;
         BuyViewController *vc4 = [[BuyViewController alloc] initWithNibName:@"BuyViewController" bundle:nil];
@@ -351,6 +353,7 @@ static NSArray *actionBtnTexts;
             break;
         case 1:
             [(ShareViewController *)vc sendWeiBo];
+            
             break;
         case 2:
             [(CommentViewController *)vc iWantComment];

@@ -250,8 +250,12 @@
         image = [[PicNameMc imageName:@"buyBookCellImages@2x.png" numberOfH:3 numberOfW:1] objectAtIndex:1];
     }
     else if ([tz isEqualToString:@"360buy.com"]) {
-        cell.priceLabel.hidden = YES;
         image = [[PicNameMc imageName:@"buyBookCellImages@2x.png" numberOfH:3 numberOfW:1] objectAtIndex:2];
+        
+        if (![dic objectForKey:@"price_now"]) {
+        
+        
+        cell.priceLabel.hidden = YES;
         NSURL *url = [NSURL URLWithString:[dic objectForKey:@"price_now_url"]];
         
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -273,7 +277,7 @@
                 NSLog(@"Error happened = %@", error);
             }
         }];
-        
+        }
     }
 //    else if ([tz isEqualToString:@"dangdang.com"]) {
     else{

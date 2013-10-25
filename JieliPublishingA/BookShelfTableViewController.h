@@ -18,7 +18,7 @@
 -(void)pushOut:(HCTadBarController *)tab;
 
 @end
-@interface BookShelfTableViewController : UITableViewController
+@interface BookShelfTableViewController : UITableViewController<BasicOperationDelegate>
 @property (strong,nonatomic) id<BookShelfTableViewControllerDelegate> delegate;
 -(void)loadBooks:(NSArray *)books;
 @end

@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "LogViewController.h"
 #import "MyScores.h"
+#import "BasicOperation.h"
+#import "ReadingActivityViewController.h"
 
 @interface MemberAreaViewController (){
     NSArray *arrayOfCells;
@@ -288,10 +290,59 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (self.currentType == 3) {
+        if (indexPath.row == 0) {
+            BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=Member&m=getShareBookList&user_Id=%@",[AppDelegate dUserId]]
+                                                             withTaget:self select:@selector(finishGetShareBookList:)];
+            
+            [bo start];
+            
+        }
+        else if (indexPath.row == 1){
+            ReadingActivityViewController *viewController = [[ReadingActivityViewController alloc] initWithNibName:@"ReadingActivityViewController" bundle:nil];
+            viewController.shareEventUrl = [NSString stringWithFormat:@"?c=Member&m=getShareEventList&user_Id=%@",[AppDelegate dUserId]];
+            [self.navigationController pushViewController:viewController animated:YES];
+            [viewController release];
+            viewController = nil;
+
+        }
+    }
 }
 
+-(void)finishGetShareBookList:(id)r{
+    if (!r) {
+        UIAlertView *ale = [[UIAlertView alloc] initWithTitle:@"会员专区" message:@"您没有分享任何书籍" delegate:Nil cancelButtonTitle:@"关闭" otherButtonTitles: nil];
+        [ale show];
+        return;
+    }
+    NSArray *array = [BookInfo bookInfoWithJSON:r];
+    UIViewController *vc = [[UIViewController  alloc] init];
+    BookShelfTableViewController *tC = [[BookShelfTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    tC.delegate = self;
+    [tC.tableView setBackgroundColor:[UIColor clearColor]];
+    [tC.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [tC.tableView setShowsVerticalScrollIndicator:NO];
+    [tC loadBooks:array];
+    [tC.tableView setFrame:CGRectMake(0, 44, 320,430)];
+    [tC.view setBackgroundColor:[UIColor colorWithPatternImage:[PicNameMc backGroundImage]]];
+    DiyTopBar *dtb = [[DiyTopBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [dtb.myTitle setText:@"分享的书籍"];
+    [dtb setType:DiyTopBarTypeBack];
+    [dtb.backButton addTarget:self action:@selector(shareBookShelfBack) forControlEvents:UIControlEventTouchUpInside];
+    [vc.view addSubview:tC.tableView];
+    
+    [vc.view addSubview:dtb];
 
+    [self.navigationController pushViewController:vc animated:YES];
+    
+
+}
+-(void)shareBookShelfBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)pushOut:(HCTadBarController *)tab{
+    [self.navigationController pushViewController:tab animated:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {

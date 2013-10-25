@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "PicNameMc.h"
 #import "DataBrain.h"
-#import "ShareViewController.h"
+//#import "ShareViewController.h"
 #import "LogViewController.h"
 //#import "WebViewController.h"
 
@@ -36,9 +36,7 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
 
 }
 -(void)setShareNumber:(int)shareNumber{
-    if (!shareNumber) {
         _shareNumber = shareNumber;
-    }
     NSString *num = [NSString stringWithFormat:@"分享(%d)",shareNumber];
     
     [self.myBtn_share setBackgroundImage:[PicNameMc defaultBackgroundImage:@"rb" withWidth:self.myBtn_share.frame.size.width withTitle:num withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
@@ -83,7 +81,8 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
     ShareViewController *vc= [[ShareViewController alloc] initWithNibName:@"ShareViewController" bundle:nil];
 //    svc.view.backgroundColor = [UIColor whiteColor];
     vc.textView.text = self.myTextView.text;
- 
+    vc.eventId = [NSString stringWithFormat:@"%d",self.mainId];
+    vc.delegate = self;
     vc.sendImage = self.myImageView.image ;
     svc = vc;
     vc = nil;
@@ -126,7 +125,9 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
 -(void)sendWeiBo{
     [svc sendWeiBo];
 }
-
+-(void)ShareEventSuccess{
+    self.shareNumber = self.shareNumber+1;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -390,7 +391,9 @@ static NSString * const kRedirectUrl = @"http://www.douban.com/location/mobile";
     for (NSDictionary *dic in array) {
         NSLog(@"%@",dic);
         NSString *picUrl = [dic objectForKey:@"pic"];
-
+        if (![picUrl length]) {
+            continue;
+        }
         
         
             NetImageView *imageView = [NetImageView NetImageViewWithUrl:picUrl];

@@ -15,8 +15,10 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate,UINavigationControllerDelegate>{
     BMKMapManager *_mapManager;
     
-     Reachability  *hostReach; 
-
+    Reachability  *hostReach;
+    
+    UIViewController *rootFirstViewController;
+    NSDictionary *pushUserInfo;
 }
 
 @property (strong, nonatomic) UIWindow *window;

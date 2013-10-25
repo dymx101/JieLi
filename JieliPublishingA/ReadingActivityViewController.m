@@ -98,9 +98,17 @@ enum{
     // Do any additional setup after loading the view from its nib.
     
     [self.myRootImageView setImage:[PicNameMc backGroundImage]];
-    
-    
     self.myTopBar.myTitle.text = @"读书活动";
+
+    if (self.shareEventUrl) {
+        self.myTopBar.myTitle.text = @"分享的活动";
+    }
+    
+    if (self.pushEventUrl) {
+        self.myTopBar.myTitle.text = @"推送的活动";
+    }
+    
+    
     [self.myTopBar setType:DiyTopBarTypeBack];
     [self.myTopBar.backButton addTarget:self action:@selector(popBack:) forControlEvents:UIControlEventTouchUpInside];
     self.button_onLine.tag = bgImageOnTag;
@@ -113,13 +121,22 @@ enum{
 
 //    [self.dataBrain getActivityList];
 //    self.dataBrain.getListDelegate = self;
+    
     [self.actI startAnimating];
+    
 //    PosX = 0;
     NSOperationQueue *q = (NSOperationQueue *)[AppDelegate shareQueue];
     NSLog(@"queue Numbers %d",[q.operations count]);
     
+    NSString *url =@"?c=Activity&m=getDBActivityList";
+    if (self.shareEventUrl) {
+        url = self.shareEventUrl;
+    }
+    if (self.pushEventUrl){
+        url = self.pushEventUrl;
+    }
     
-    BasicOperation *bOp = [[BasicOperation alloc] initWithUrl:@"?c=Activity&m=getDBActivityList"];
+    BasicOperation *bOp = [[BasicOperation alloc] initWithUrl:url];
     bOp.tag = 0;
     bOp.delegate = self;
     [[AppDelegate shareQueue] addOperation:bOp];
@@ -148,6 +165,15 @@ enum{
         BasicOperation *bop = (BasicOperation *)op;
         if (bop.tag == 0) {
             NSLog(@"%@",result);
+            if (self.shareEventUrl) {
+                [self.actI stopAnimating];
+                if (!result) {
+                    UIAlertView *alv = [[UIAlertView alloc] initWithTitle:@"分享的活动" message:@"您没有分享任何活动" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    alv.tag = 4001;
+                    [alv show];
+
+                }
+            }
             
             [self getEventInfomation:result];
             
@@ -155,6 +181,13 @@ enum{
         }
     }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 4001) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 -(void)getEventInfomation:(id)eInfo{
     for (NSDictionary *dic in eInfo) {
@@ -362,7 +395,8 @@ enum{
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)popBack:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 

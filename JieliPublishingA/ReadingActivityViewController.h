@@ -55,6 +55,6 @@
 
 @property (nonatomic,assign) NSMutableDictionary *actIdandMainId;
 
-
-
+@property (nonatomic,strong) NSString *shareEventUrl;
+@property (nonatomic,strong) NSString *pushEventUrl;
 @end

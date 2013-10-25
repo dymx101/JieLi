@@ -18,6 +18,10 @@
 #import "WXApi.h"
 #import <QQConnection/QQConnection.h>
 #import <QQApi/QQApi.h>
+#import "ReadingActivityViewController.h"
+
+#import "BasicOperation.h"
+//#import "ASIFormDataRequest.h"
 
 #import "LocalEpubBookViewController.h"
 //#import "DOUAPIEngine.h"
@@ -147,6 +151,30 @@ static NSOperationQueue *queue;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+        //注册接收通知类型
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         
+         (UIRemoteNotificationTypeBadge
+          
+          | UIRemoteNotificationTypeSound
+          
+          | UIRemoteNotificationTypeAlert)];
+        
+        //设置图标标记
+        
+        application.applicationIconBadgeNumber = 0;
+    
+
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"推送通知"
+//                                                           message:@"这是通过推送窗口启动的程序，你可以在这里处理推送内容"
+//                                                          delegate:nil
+//                                                 cancelButtonTitle:@"知道了"
+//                                                 otherButtonTitles:nil, nil];
+//            [alert show];
+//            [alert release];
+    
+    
     [ShareSDK registerApp:@"520520test"];
     //添加新浪微博应用
     [ShareSDK connectSinaWeiboWithAppKey:SinaAppKey
@@ -188,8 +216,10 @@ static NSOperationQueue *queue;
     UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
     navigationController1.delegate = self;
     [navigationController1 setNavigationBarHidden:YES];
+    rootFirstViewController = viewController1;
     [viewController1 release];
     viewController1 = nil;
+    
     
     UIViewController *viewController2 = [[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil];
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:viewController2];
@@ -242,6 +272,17 @@ static NSOperationQueue *queue;
     hostReach = [[Reachability reachabilityWithHostName:@"http://www.jielibj.com"] retain];
     [hostReach startNotifier];
 
+
+
+
+
+if (launchOptions) {
+    NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (pushNotificationKey) {
+        [self comeFromPush:pushNotificationKey];
+            }
+        }
+
     return YES;
 }
 - (void)reachabilityChanged:(NSNotification *)note {
@@ -267,6 +308,136 @@ static NSOperationQueue *queue;
 //    }
 //}
 
+
+- (void)application:(UIApplication*)application
+
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+
+{
+    
+//    NSLog(@"设备令牌: %@", deviceToken);
+    
+    NSString *tokeStr = [NSString stringWithFormat:@"%@",deviceToken];
+    
+    if ([tokeStr length] == 0) {
+        
+        return;
+        
+    }
+    
+    
+    
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"/</>"];
+    
+    tokeStr = [tokeStr stringByTrimmingCharactersInSet:set];
+    
+    tokeStr = [tokeStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"设备令牌: %@",tokeStr);
+    BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=Push&m=deviceToken_ios&tokenStr=%@",tokeStr] withTaget:nil select:nil];
+    [bo start];
+
+//    NSString *strURL = @"http://192.168.1.5/push_jieli_service";
+//    
+//    NSURL *url = [NSURL URLWithString:strURL];
+    
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    
+//    [request setPostValue:tokeStr forKey:@"token"];
+//    
+//    [request setPostValue:@"com.zhongka.JieLiShelf" forKey:@"appid" ];
+//    
+//    [request setDelegate:self];
+//    
+//    NSLog(@"发送给服务器");
+//    
+//    [request startAsynchronous];
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"\napns -> didReceiveRemoteNotification,Receive Data:\n%@", userInfo);
+    pushUserInfo = [[NSDictionary alloc] initWithDictionary:userInfo];
+    //把icon上的标记数字设置为0,
+    application.applicationIconBadgeNumber = 0;
+    if ([[userInfo objectForKey:@"aps"] objectForKey:@"alert"]!=NULL) {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"推送消息"
+                                                        message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]
+                                                       delegate:self
+                                              cancelButtonTitle:@"关闭"
+                                              otherButtonTitles:@"确定",nil];
+        alert.tag = 101;
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag==101) {
+        if (buttonIndex == 1) {
+            }
+        [self comeFromPush:pushUserInfo];
+        }
+    
+    
+}
+-(void)comeFromPush:(NSDictionary *)userInfo{
+    for (NSString *key in userInfo) {
+        if ([key isEqualToString:@"body"]) {
+            NSDictionary *body = [userInfo objectForKey:@"body"];
+            NSString *type = [body objectForKey:@"type"];
+            NSString *s_id = [body objectForKey:@"id"];
+            
+            if ([type isEqualToString:@"book"]) {
+                BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=Book&m=getOneBook&book_id=%@",s_id] withTaget:self select:@selector(pushToOneBook:)];
+                [bo start];
+            }
+            else if ([type isEqualToString:@"event"]){
+//                BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=Activity&m=getDbActivityById&id=%@",s_id] withTaget:self select:@selector(pushToOnEvent:)];
+//                [bo start];
+                [self pushToOnEvent:s_id];
+
+            }
+            
+        }
+    }
+}
+-(void)pushToOneBook:(id)r{
+    NSLog(@"push  \n ");
+    BookInfo *info = [[BookInfo bookInfoWithJSON:r] objectAtIndex:0];
+//    NSLog(@"%@",info);
+    
+    HCTadBarController *tabBarController = [[HCTadBarController alloc] init];
+    tabBarController.bookInfo = info;
+    
+    
+    tabBarController.hidesBottomBarWhenPushed = YES;
+    
+    if (!rootFirstViewController) {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"rootViewNil" message:Nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+        [alert show];
+    }
+    [rootFirstViewController.navigationController pushViewController:tabBarController animated:YES];
+
+}
+-(void)pushToOnEvent:(NSString *)s_id{
+    ReadingActivityViewController *viewController = [[ReadingActivityViewController alloc] initWithNibName:@"ReadingActivityViewController" bundle:nil];
+    viewController.pushEventUrl = [NSString stringWithFormat:@"?c=Activity&m=getDbActivityById&id=%@",s_id];
+    [rootFirstViewController.navigationController pushViewController:viewController animated:YES];
+    [viewController release];
+    viewController = nil;
+
+    
+    
+}
+- (void)application:(UIApplication*)application
+
+didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+
+{
+    
+    NSLog(@"获得令牌失败: %@", error);
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

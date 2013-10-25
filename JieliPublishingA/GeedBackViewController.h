@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet DiyTopBar *diyTopBar;
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UITextField *textFildA;
+@property (retain, nonatomic) IBOutlet UITextField *textFildContract;
 
 @end

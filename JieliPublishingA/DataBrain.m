@@ -208,15 +208,15 @@
 //得到精品图书列表
 -(void)getMarketableBookList{
     int start = [self.marketableArray count];
-    NSString *urlString = [NSString stringWithFormat:@"?c=Book&m=getMarketableBookList&start=%d&amount=6",start];
+    NSString *urlString = [NSString stringWithFormat:@"?c=Book&m=getCompetitiveBookList&start=%d&amount=6",start];
     [self downMoreBookListWithUrl:urlString OfType:DownListTypeOfMarketable];
-}
+}//getMarketableBookList
 //得到畅销书榜列表
 -(void)getCompetitiveBookList{
     int start = [self.competitiveArray count];
-    NSString *urlString = [NSString stringWithFormat:@"?c=Book&m=getCompetitiveBookList&start=%d&amount=6",start];
+    NSString *urlString = [NSString stringWithFormat:@"?c=Book&m=getMarketableBookList&start=%d&amount=6",start];
     [self downMoreBookListWithUrl:urlString OfType:DownListTypeOfCompetitive];
-}
+}//getCompetitiveBookList
 //得到图书分类子类列表
 -(void)getCategorieList:(int)categoryid{
     int start = [self.categorieListArray count];

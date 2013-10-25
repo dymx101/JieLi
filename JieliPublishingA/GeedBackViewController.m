@@ -7,6 +7,8 @@
 //
 
 #import "GeedBackViewController.h"
+#import "BasicOperation.h"
+#import "AppDelegate.h"
 
 @interface GeedBackViewController ()
 
@@ -36,7 +38,7 @@
 }
 static NSString *text = nil;
 -(void)faSong{
-    NSString *avTitle = @"发送成功";
+    NSString *avTitle = nil;
     if (![self.textView.text length]) {
         avTitle = @"内容不能为空";
     }
@@ -48,11 +50,21 @@ static NSString *text = nil;
             text = [self.textView.text copy];
         }
     }
-    
+    if (avTitle) {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"意见反馈" message:avTitle delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [av show];
+        return;
+    }
+
     [self.textView resignFirstResponder];
     [self.textFildA resignFirstResponder];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"意见反馈" message:avTitle delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=admin&m=feedBack&user_Id=%@&info=%@&contact=%@",[AppDelegate dUserId],self.textView.text,self.textFildContract.text] withTaget:self select:@selector(geedBack:)];
+    [bo start];
+}
+
+-(void)geedBack:(id)r{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"意见反馈" message:@"发送成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [av show];
 }
 -(void)popBack{
@@ -93,6 +105,11 @@ static NSString *text = nil;
     [self setDiyTopBar:nil];
     [self setTextFildA:nil];
     [self setTextView:nil];
+    [self setTextFildContract:nil];
     [super viewDidUnload];
+}
+- (void)dealloc {
+    [_textFildContract release];
+    [super dealloc];
 }
 @end

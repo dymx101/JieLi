@@ -11,9 +11,19 @@
 #import "AppDelegate.h"
 #import "WeiBoBar.h"
 
+@protocol ShareViewDelegate <NSObject>
+
+-(void)ShareEventSuccess;
+
+@end
+
+
 @interface ShareViewController : BasicBookViewController<WeiBoDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong,nonatomic) UIImage *sendImage;
+@property (strong,nonatomic) NSString *bookId;
+@property (strong,nonatomic) NSString *eventId;
+@property (assign,nonatomic) id <ShareViewDelegate> delegate;
 -(void)sendWeiBo;
 @end

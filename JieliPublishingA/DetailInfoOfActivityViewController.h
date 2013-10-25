@@ -14,8 +14,8 @@
 #import "ASDepthModalViewController.h"
 #import "BasicOperation.h"
 #import "NetImageView.h"
-
-@interface DetailInfoOfActivityViewController : UIViewController<GetImageOperationDelegate,ReadEventOperationDelegate,BasicOperationDelegate,UIGestureRecognizerDelegate>
+#import "ShareViewController.h"
+@interface DetailInfoOfActivityViewController : UIViewController<GetImageOperationDelegate,ReadEventOperationDelegate,BasicOperationDelegate,UIGestureRecognizerDelegate,ShareViewDelegate>
 @property (retain, nonatomic) IBOutlet UIView *popupView;
 @property (strong, nonatomic) IBOutlet UIScrollView *myScrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *myImageView;

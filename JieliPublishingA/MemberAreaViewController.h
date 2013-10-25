@@ -13,8 +13,9 @@
 #import "CellA.h"
 #import "MemberInformationView.h"
 #import "BasicOperation.h"
+#import "BookShelfTableViewController.h"
 
-@interface MemberAreaViewController : UIViewController<LogAndRegisterDelegate,BasicOperationDelegate>
+@interface MemberAreaViewController : UIViewController<LogAndRegisterDelegate,BasicOperationDelegate,BookShelfTableViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet DiyTopBar *myTopBar;
 
 

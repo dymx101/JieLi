@@ -7,7 +7,7 @@
 //
 
 #import "ShareViewController.h"
-
+#import "BasicOperation.h"
 @interface ShareViewController (){
     NSDictionary *userInfo;
     NSArray *statuses;
@@ -176,6 +176,8 @@
 
 }
 -(void)sendShare:(ShareType)type{
+    
+    
     NSString *sendMessage = self.textView.text;
     UIImage *sendImage = self.sendImage;
 
@@ -200,6 +202,21 @@
                         if (state == SSPublishContentStateSuccess)
                         {
                             NSLog(@"分享成功");
+                            NSString *url = nil;
+                            if (self.bookId) {
+                                url =[NSString stringWithFormat:@"?c=Member&m=shareBook&user_Id=%@&book_Id=%@",[AppDelegate dUserId],self.bookId];
+                                BasicOperation *bo = [BasicOperation basicOperationWithUrl:url withTaget:nil select:nil];
+                                [bo start];
+
+                            }
+                            else if(self.eventId){
+                                url =[NSString stringWithFormat:@"?c=Member&m=shareEvent&user_Id=%@&event_Id=%@",[AppDelegate dUserId],self.eventId];
+                                BasicOperation *bo = [BasicOperation basicOperationWithUrl:url withTaget:self select:@selector(finishShareEvent)];
+                                [bo start];
+
+                            }
+                            
+
                         }
                         else if (state == SSPublishContentStateFail)
                         {
@@ -209,7 +226,9 @@
     
 }
 
-
+-(void)finishShareEvent{
+    [self.delegate ShareEventSuccess];
+}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]) {
