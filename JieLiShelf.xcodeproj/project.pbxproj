@@ -94,9 +94,6 @@
 		26316AAE16E09887006C90D6 /* No collection books.png in Resources */ = {isa = PBXBuildFile; fileRef = 26316AAD16E09887006C90D6 /* No collection books.png */; };
 		26316AB016E0988E006C90D6 /* btn-jieli book.png in Resources */ = {isa = PBXBuildFile; fileRef = 26316AAF16E0988E006C90D6 /* btn-jieli book.png */; };
 		2631BC80162D245A00D2EFC4 /* HCBookShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = 2631BC7F162D245A00D2EFC4 /* HCBookShelf.m */; };
-		263245BE16AFAAF200E2BC88 /* brand1.png in Resources */ = {isa = PBXBuildFile; fileRef = 263245BB16AFAAF200E2BC88 /* brand1.png */; };
-		263245C316AFB35700E2BC88 /* brand2.png in Resources */ = {isa = PBXBuildFile; fileRef = 263245C116AFB35700E2BC88 /* brand2.png */; };
-		263245C416AFB35700E2BC88 /* brand3.png in Resources */ = {isa = PBXBuildFile; fileRef = 263245C216AFB35700E2BC88 /* brand3.png */; };
 		2634F34B165CBCC800C42CE5 /* BookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634F34A165CBCC800C42CE5 /* BookInfo.m */; };
 		263716C916E86FC600C7EF03 /* BackGroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263716C816E86FC500C7EF03 /* BackGroundImageView.m */; };
 		263822DA16F9417500B4C093 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 263822D716F9417500B4C093 /* mapapi.bundle */; };
@@ -426,6 +423,8 @@
 		BFAB9747174082C60065F785 /* slider_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB9743174082C60065F785 /* slider_ball.png */; };
 		BFAB9748174082C60065F785 /* yellowslide.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB9744174082C60065F785 /* yellowslide.png */; };
 		BFAB974B174087D20065F785 /* 人生百忌2.epub in Resources */ = {isa = PBXBuildFile; fileRef = BFAB974A174087D20065F785 /* 人生百忌2.epub */; };
+		BFD7D4E518229B1D00C800D4 /* BookCertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD7D4E318229B1D00C800D4 /* BookCertificateViewController.m */; };
+		BFD7D4E618229B1D00C800D4 /* BookCertificateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD7D4E418229B1D00C800D4 /* BookCertificateViewController.xib */; };
 		BFE5343C172B63B40061B57B /* CellOfBd.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE5343B172B63B40061B57B /* CellOfBd.m */; };
 		BFE5343E172B63CA0061B57B /* CellOfBd.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFE5343D172B63CA0061B57B /* CellOfBd.xib */; };
 		BFFC4DD817B88B6B00373BAB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BFFC4DD617B88B6B00373BAB /* Default.png */; };
@@ -545,9 +544,6 @@
 		26316AAF16E0988E006C90D6 /* btn-jieli book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-jieli book.png"; sourceTree = "<group>"; };
 		2631BC7E162D245A00D2EFC4 /* HCBookShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCBookShelf.h; sourceTree = "<group>"; };
 		2631BC7F162D245A00D2EFC4 /* HCBookShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCBookShelf.m; sourceTree = "<group>"; };
-		263245BB16AFAAF200E2BC88 /* brand1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brand1.png; sourceTree = "<group>"; };
-		263245C116AFB35700E2BC88 /* brand2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brand2.png; sourceTree = "<group>"; };
-		263245C216AFB35700E2BC88 /* brand3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brand3.png; sourceTree = "<group>"; };
 		2634F349165CBCC800C42CE5 /* BookInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfo.h; sourceTree = "<group>"; };
 		2634F34A165CBCC800C42CE5 /* BookInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfo.m; sourceTree = "<group>"; };
 		263716C716E86FC500C7EF03 /* BackGroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackGroundImageView.h; sourceTree = "<group>"; };
@@ -1005,6 +1001,9 @@
 		BFAB9743174082C60065F785 /* slider_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slider_ball.png; path = ../slider_ball.png; sourceTree = "<group>"; };
 		BFAB9744174082C60065F785 /* yellowslide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = yellowslide.png; path = ../yellowslide.png; sourceTree = "<group>"; };
 		BFAB974A174087D20065F785 /* 人生百忌2.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "人生百忌2.epub"; sourceTree = "<group>"; };
+		BFD7D4E218229B1D00C800D4 /* BookCertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCertificateViewController.h; sourceTree = "<group>"; };
+		BFD7D4E318229B1D00C800D4 /* BookCertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCertificateViewController.m; sourceTree = "<group>"; };
+		BFD7D4E418229B1D00C800D4 /* BookCertificateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookCertificateViewController.xib; sourceTree = "<group>"; };
 		BFE5343A172B63B40061B57B /* CellOfBd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellOfBd.h; sourceTree = "<group>"; };
 		BFE5343B172B63B40061B57B /* CellOfBd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellOfBd.m; sourceTree = "<group>"; };
 		BFE5343D172B63CA0061B57B /* CellOfBd.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellOfBd.xib; sourceTree = "<group>"; };
@@ -1299,6 +1298,9 @@
 				BF4B919618164ECC00410B6E /* MyScores.h */,
 				BF4B919718164ECC00410B6E /* MyScores.m */,
 				BF4B919918164EEA00410B6E /* MyScores.xib */,
+				BFD7D4E218229B1D00C800D4 /* BookCertificateViewController.h */,
+				BFD7D4E318229B1D00C800D4 /* BookCertificateViewController.m */,
+				BFD7D4E418229B1D00C800D4 /* BookCertificateViewController.xib */,
 			);
 			name = "会员专区";
 			sourceTree = "<group>";
@@ -1758,9 +1760,6 @@
 				26AC011A1627E53F00210012 /* FirstViewController.h */,
 				26AC011B1627E53F00210012 /* FirstViewController.m */,
 				26AC01281627E53F00210012 /* FirstViewController.xib */,
-				263245BB16AFAAF200E2BC88 /* brand1.png */,
-				263245C116AFB35700E2BC88 /* brand2.png */,
-				263245C216AFB35700E2BC88 /* brand3.png */,
 				26438E27164211B9005FB205 /* FirstnavigationItem.h */,
 				26438E28164211B9005FB205 /* FirstnavigationItem.m */,
 				263C67A01640F21200F31DEB /* FirstNavigationBar.h */,
@@ -2291,9 +2290,6 @@
 				26E66F9C16AE326C000D34A0 /* F_image_member_6@2x.png in Resources */,
 				26E66FA116AE326C000D34A0 /* F_image_member_11@2x.png in Resources */,
 				26E66FA316AE326C000D34A0 /* F_image_member_13@2x.png in Resources */,
-				263245BE16AFAAF200E2BC88 /* brand1.png in Resources */,
-				263245C316AFB35700E2BC88 /* brand2.png in Resources */,
-				263245C416AFB35700E2BC88 /* brand3.png in Resources */,
 				260F86CC16B7AE170040664D /* BookView.xib in Resources */,
 				2660169E16BB8A6B00700D96 /* F_image_logBg@2x.png in Resources */,
 				266016A016BB8A7500700D96 /* F_image_logBg.png in Resources */,
@@ -2396,6 +2392,7 @@
 				268C8B9716F2F721006DA55B /* star@2x.png in Resources */,
 				26F8CB1B16F2FA0E001B1EFE /* CgaryB.png in Resources */,
 				26F8CB1C16F2FA0E001B1EFE /* CgaryB@2x.png in Resources */,
+				BFD7D4E618229B1D00C800D4 /* BookCertificateViewController.xib in Resources */,
 				2662199D16F318F8008E2AB5 /* my bookshelf 1.png in Resources */,
 				2662199E16F318F8008E2AB5 /* my bookshelf 2.png in Resources */,
 				2662199F16F318F8008E2AB5 /* my share 1.png in Resources */,
@@ -2602,6 +2599,7 @@
 				BF8A37B51754494B00DE68E4 /* NSData+Base64.m in Sources */,
 				BF8A37B91754798A00DE68E4 /* LocalEpubBookViewController.m in Sources */,
 				BF2C2205175731EF00B1923E /* HotWordLabel.m in Sources */,
+				BFD7D4E518229B1D00C800D4 /* BookCertificateViewController.m in Sources */,
 				BF9F7080178BF5B00051B436 /* UserHelpViewController.m in Sources */,
 				BF54524C17D878C700D799D8 /* GetProductsList.m in Sources */,
 				BF96F39D17DD9B7A00E6BC9C /* ReadRulerViewController.m in Sources */,

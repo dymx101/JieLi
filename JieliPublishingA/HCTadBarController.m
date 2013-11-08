@@ -181,8 +181,10 @@ static NSArray *actionBtnTexts;
 
         CommentViewController *vc3 = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
         vc3.delegate = self;
+        
         BuyViewController *vc4 = [[BuyViewController alloc] initWithNibName:@"BuyViewController" bundle:nil];
         vc4.tabBarController = self;
+        
         
         _viewControllers = [[NSArray alloc] initWithObjects:vc1, vc2, vc3, vc4, nil];
     }
@@ -281,7 +283,12 @@ static NSArray *actionBtnTexts;
 	// Do any additional setup after loading the view.
     isJudgePage = YES;
     if (!actionBtnTexts) {
+        if (self.exchangeScore) {
+            actionBtnTexts = [[NSArray alloc] initWithObjects:@"在线阅读",@"发送分享",@"我要评价",@"兑换", nil];
+        }
+        else{
         actionBtnTexts = [[NSArray alloc] initWithObjects:@"在线阅读",@"发送分享",@"我要评价",@"购买", nil];
+        }
     }
     [self.view addSubview:[[BackGroundImageView alloc] initWithFrame:self.view.frame]];
     
@@ -359,8 +366,11 @@ static NSArray *actionBtnTexts;
             [(CommentViewController *)vc iWantComment];
             break;
         case 3:
+        {
+//            BuyViewController *vcc =(BuyViewController *)vc;
+//            vcc.exchangeScore = self.exchangeScore;
             [(BuyViewController *)vc buy];
-
+        }
         default:
             break;
     }

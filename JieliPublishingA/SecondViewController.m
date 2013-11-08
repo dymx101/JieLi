@@ -77,7 +77,7 @@
     NSArray *keys = @[@"word",@"center",@"fountSize",@"color",@"link"];
     NSMutableArray *array = [NSMutableArray array];
     
-    NSArray *obs1 = @[@"1SPY视觉大发现",@"100120",@"17",@"CC0033",@"http://www.jielibj.com/article.php?id=380"];
+    NSArray *obs1 = @[@"I SPY 视觉大发现",@"100120",@"17",@"CC0033",@"http://www.jielibj.com/article.php?id=380"];
     NSArray *obs2 = @[@"抓坏蛋",@"60180",@"15",@"00CC66",@"http://www.jielibj.com/article.php?id=366"];
     NSArray *obs3 = @[@"管好自己就能飞",@"120300",@"16",@"663366",@"http://www.jielibj.com/article.php?id=375"];
     NSArray *obs4 = @[@"刘墉",@"160160",@"16",@"999999",@"http://www.jielibj.com/search.php?encode=YTozOntzOjg6ImtleXdvcmRzIjtzOjY6IuWImOWiiSI7czoxMDoiaW1hZ2VGaWVsZCI7czo2OiLmkJzntKIiO3M6MTg6InNlYXJjaF9lbmNvZGVfdGltZSI7aToxMzY5NjQ3OTQ2O30="];

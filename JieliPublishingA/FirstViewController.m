@@ -67,41 +67,98 @@
 
     self.tagIndex = 100;
     
-	// Do any additional setup after loading the view, typically from a nib.
-    int numberOfPages = 3;
+    BasicOperation *bo = [BasicOperation basicOperationWithUrl:@"?c=admin&m=getSlides" withTaget:self select:@selector(loadAdPages:)];
+//    [bo start];
+    [[AppDelegate shareQueue] addOperation:bo];
+}
+
+-(void)loadAdPages:(id)r{
+    
+//    NSLog(@"%@",r);
+    int numberOfPages = [r count];
+    
     self.MyScrollorView.contentSize = CGSizeMake(self.MyScrollorView.bounds.size.width*numberOfPages, 0);
     [self.MyScrollorView setShowsHorizontalScrollIndicator:NO];
-    for (int i = 0; i<numberOfPages; i++) {
-        UIImageView *imgageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.MyScrollorView.frame.size.width*i, 0, self.MyScrollorView.frame.size.width, self.MyScrollorView.frame.size.height)];
-        [self.MyScrollorView addSubview:imgageView];
-        switch (i) {
-            case 0:
-                [imgageView setBackgroundColor:[UIColor blueColor]];
-                [imgageView setImage:[UIImage imageNamed:@"brand1.png"]];
-                break;
-            case 1:
-                [imgageView setBackgroundColor:[UIColor redColor]];
-                [imgageView setImage:[UIImage imageNamed:@"brand2.png"]];
-                break;
-            case 2:
-                [imgageView setBackgroundColor:[UIColor yellowColor]];
-                [imgageView setImage:[UIImage imageNamed:@"brand3.png"]];
-                break;
-            case 3:
-                [imgageView setBackgroundColor:[UIColor purpleColor]];
-                break;
-            case 4:
-                [imgageView setBackgroundColor:[UIColor orangeColor]];
-                break;
-            default:
-                break;
-        }
-        [imgageView release];
-        imgageView = nil;
+    
+    int index = 0;
+    for (NSDictionary *dic in r) {
+        NetImageView *niv = [NetImageView NetImageViewWithUrl:[dic objectForKey:@"pic"]];
+        niv.userInfo = [dic objectForKey:@"link"];
+        niv.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(adPageTaped:)];
+        [niv addGestureRecognizer:tap];
+        
+        niv.frame =CGRectMake(self.MyScrollorView.frame.size.width*index, 0, self.MyScrollorView.frame.size.width, self.MyScrollorView.frame.size.height);
+        
+        index++;
+        
+        [self.MyScrollorView addSubview:niv];
+        
+        
     }
+//    for (int i = 0; i<numberOfPages; i++) {
+//        UIImageView *imgageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.MyScrollorView.frame.size.width*i, 0, self.MyScrollorView.frame.size.width, self.MyScrollorView.frame.size.height)];
+//        [self.MyScrollorView addSubview:imgageView];
+//        switch (i) {
+//            case 0:
+//                [imgageView setBackgroundColor:[UIColor blueColor]];
+//                [imgageView setImage:[UIImage imageNamed:@"brand1.png"]];
+//                break;
+//            case 1:
+//                [imgageView setBackgroundColor:[UIColor redColor]];
+//                [imgageView setImage:[UIImage imageNamed:@"brand2.png"]];
+//                break;
+//            case 2:
+//                [imgageView setBackgroundColor:[UIColor yellowColor]];
+//                [imgageView setImage:[UIImage imageNamed:@"brand3.png"]];
+//                break;
+//            case 3:
+//                [imgageView setBackgroundColor:[UIColor purpleColor]];
+//                break;
+//            case 4:
+//                [imgageView setBackgroundColor:[UIColor orangeColor]];
+//                break;
+//            default:
+//                break;
+//        }
+//        [imgageView release];
+//        imgageView = nil;
+//    }
     self.MyPageControl.numberOfPages = numberOfPages;
     self.MyPageControl.currentPage = 0;
     [self.MyScrollorView setBackgroundColor:[UIColor grayColor]];
+
+}
+-(void)adPageTaped:(UIGestureRecognizer*)gr{
+    NetImageView *niv = (NetImageView *)gr.view;
+    if (niv.userInfo) {
+        NSLog(@"%@",niv.userInfo);
+        
+        [self.myDiyTopBar setType:DiyTopBarTypeCollect];
+        [self.myDiyTopBar.collectButton setTitle:@"关闭" forState:UIControlStateNormal];
+        [self.myDiyTopBar.collectButton addTarget:self action:@selector(cancelWebView) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44)];
+        webView.tag = 50050;
+        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:niv.userInfo]];
+        [webView loadRequest:req];
+        [self.view addSubview:webView];
+        
+        webView = nil;
+
+    }
+    
+    
+    
+}
+
+-(void)cancelWebView{
+    UIWebView *wv = (UIWebView *)[self.view viewWithTag:50050];
+    [wv removeFromSuperview];
+    wv = nil;
+    
+    [self.myDiyTopBar setType:DiyTopBarTypeNone];
 }
 -(void)viewDidAppear:(BOOL)animated{
 //    [self.navigationController setNavigationBarHidden:YES];

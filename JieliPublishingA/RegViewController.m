@@ -114,6 +114,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[AppDelegate shareQueue] cancelAllOperations];
+}
 
 - (void)viewDidUnload {
     bGA = nil;

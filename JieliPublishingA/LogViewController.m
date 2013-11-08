@@ -57,6 +57,11 @@
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[AppDelegate shareQueue] cancelAllOperations];
+}
+
 
 - (IBAction)logIn:(id)sender {
     if ([self checkBeforePost]) {

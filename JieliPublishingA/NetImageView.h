@@ -42,6 +42,7 @@ typedef enum {
 }
 @property (nonatomic,readonly,assign) NetImageViewState netImageState;
 @property (nonatomic,assign) id<NetImageViewDelegate>delegate;
+@property (nonatomic,strong) NSString *userInfo;
 +(id)NetImageViewWithUrl:(NSString*)url;
 +(id)NetImageViewWithUrl:(NSString*)url withTarget:(id)target;
 

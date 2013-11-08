@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -55,15 +55,29 @@
                                 <action selector="scroeRule:" destination="1" eventType="touchUpInside" id="BgX-vE-dcv"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nKG-tj-Ves">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nKG-tj-Ves">
                             <rect key="frame" x="12" y="252" width="300" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="积分兑换" backgroundImage="score3.png">
                                 <color key="titleColor" red="0.86274516580000005" green="0.34117648010000001" blue="0.180392161" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="scoreExchange:" destination="1" eventType="touchUpInside" id="Ewd-rB-4cX"/>
+                            </connections>
                         </button>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="z1Q-yC-Sol">
+                        <tableView clipsSubviews="YES" tag="3" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="81" sectionHeaderHeight="22" sectionFooterHeight="22" id="7zE-At-p2o">
+                            <rect key="frame" x="320" y="0.0" width="320" height="330"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outlet property="dataSource" destination="1" id="4wh-0a-wlC"/>
+                                <outlet property="delegate" destination="1" id="ryD-fC-3NX"/>
+                                <outletCollection property="gestureRecognizers" destination="BN1-hZ-GUy" appends="YES" id="OyI-4r-XDJ"/>
+                            </connections>
+                        </tableView>
+                        <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="z1Q-yC-Sol">
                             <rect key="frame" x="320" y="0.0" width="320" height="330"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -98,6 +112,7 @@
             <connections>
                 <outlet property="accuntLable" destination="nE5-yw-0FP" id="62M-QK-h3Z"/>
                 <outlet property="detailTableView" destination="z1Q-yC-Sol" id="O7Z-Sh-m4U"/>
+                <outlet property="exchangeTableView" destination="7zE-At-p2o" id="nY8-nm-uaD"/>
                 <outlet property="myScrollView" destination="4cZ-GL-Fg9" id="Pat-ZF-v90"/>
                 <outlet property="ruleScrollView" destination="YNr-I4-76t" id="Bgf-QZ-zNe"/>
                 <outlet property="scoreLable" destination="Ba9-yC-1pc" id="CEe-Gq-rzB"/>
@@ -111,6 +126,11 @@
         <swipeGestureRecognizer direction="right" id="728-7a-xvv">
             <connections>
                 <action selector="detailBack:" destination="1" id="2He-9o-o9W"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="right" id="BN1-hZ-GUy">
+            <connections>
+                <action selector="scoreExchangeBack:" destination="1" id="9eL-mO-fcQ"/>
             </connections>
         </swipeGestureRecognizer>
     </objects>

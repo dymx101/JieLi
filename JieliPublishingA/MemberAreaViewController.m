@@ -40,16 +40,9 @@
 {
 
 }
--(void)finishOperation:(id)result{
-    NSLog(@"%@",result);
-    [self.actI stopAnimating];
-    [self.actI removeFromSuperview];
-
-    [self logSuccessWithMemberInfo:result];
-}
 -(void)viewWillDisappear:(BOOL)animated
 {
-    
+    [[AppDelegate shareQueue] cancelAllOperations];
 }
 
 - (IBAction)batButtonPressed:(UIButton*)sender {
@@ -134,7 +127,7 @@
     [self.myMemberAreaView addSubview:myScores];
     myScores.hidden = YES;
     [self.myMemberAreaView bringSubviewToFront:self.meberAreaTopBar];
-    
+    myScores.fatherController = self;
     
     self.myMemberAreaView.hidden = YES;
 //    [self logView];
@@ -203,6 +196,29 @@
 
 }
 
+-(void)finishOperation:(id)result{
+    NSLog(@"%@",result);
+    [self.actI stopAnimating];
+    [self.actI removeFromSuperview];
+    if (!result) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"会员专区" message:@"自动登录失败，请稍候尝试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"注销",nil];
+        [alertView show];
+    }
+    else{
+    [self logSuccessWithMemberInfo:result];
+    }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if(buttonIndex==1){
+        [AppDelegate dLogOut];
+        LogViewController *viewController = [[LogViewController alloc] initWithNibName:@"LogViewController" bundle:nil];
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    
+}
 
 - (void)logView {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LogAndRegister" owner:self options:nil];

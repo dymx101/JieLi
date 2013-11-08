@@ -61,21 +61,24 @@
     id result = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     if (target) {
-        [target performSelectorOnMainThread:sel withObject:result waitUntilDone:NO];
+        if ([target respondsToSelector:sel]) {
+            [target performSelectorOnMainThread:sel withObject:result waitUntilDone:NO];
+        }
     }
-    else{
-        [self performSelectorOnMainThread:@selector(finish:) withObject:result waitUntilDone:NO];
-    }
+    [self performSelectorOnMainThread:@selector(finish:) withObject:result waitUntilDone:NO];
 }
 
 -(void)finish:(id)result{
-    if ([self.delegate respondsToSelector:@selector(finishOperation:)]) {
-        [self.delegate finishOperation:result];
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(finishOperation:)]) {
+            [self.delegate finishOperation:result];
+        }
+        if ([self.delegate respondsToSelector:@selector(finishOperationWithOperation:result:)]){
+            [self.delegate finishOperationWithOperation:self result:result];
+        }
+
     }
-    else if ([self.delegate respondsToSelector:@selector(finishOperationWithOperation:result:)]){
-        [self.delegate finishOperationWithOperation:self result:result];
-    }
-    else if (myblock){
+    if (myblock){
         myblock(result);
     }
 

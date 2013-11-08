@@ -14,6 +14,7 @@
 #import "InAppJieLiIAPHelper.h"
 #import "EPubViewController.h"
 #import "GetProductsList.h"
+#import "BasicOperation.h"
 #define kDocument_Folder [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
 @interface BuyViewController (){
@@ -69,7 +70,44 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1000) {
+        if (buttonIndex == 1) {
+            BasicOperation *bo = [BasicOperation basicOperationWithUrl:[NSString stringWithFormat:@"?c=Member&m=exchangeBook&exchange_id=%@&user_id=%@",self.exchange_id,[AppDelegate dUserId]] withTaget:self select:@selector(finishexchangeBook:)];
+            [bo start];
+        }
+    }
+}
+
+-(void)finishexchangeBook:(id)r{
+    NSLog(@"%@",r);
+    int result = [[r objectForKey:@"result"] intValue];
+    
+    NSString *title = nil;
+    if (result) {
+        title = @"兑换成功";
+        [self readOnLine];
+    }
+    else{
+        title = @"兑换失败";
+    }
+    
+    NSString *message = [r objectForKey:@"message"];
+    UIAlertView *alv = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    alv.tag = 1001;
+    [alv show];
+
+}
 -(void)buy{
+    if (self.exchangeScore) {
+        UIAlertView *alv = [[UIAlertView alloc] initWithTitle:@"书籍兑换" message:@"您将消耗一定积分获得一本书" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alv.tag = 1000;
+        [alv show];
+
+        
+    }
+    else{
     NSString *identifier = [NSString stringWithFormat:@"com.%06d",self.bookInfo.bookId];
     [GetProductsList getProductsList:^(BOOL success, id result) {
         NSSet *sset = (NSSet *)result;
@@ -88,7 +126,7 @@
         }
     }];
     
-    
+    }
 //    InAppJieLiIAPHelper *inapp = [InAppJieLiIAPHelper sharedHelper];
 //    [inapp requestProducts];
 }
@@ -146,8 +184,13 @@
     [downingView.proGressView setProgress:1];
     [downingView removeFromSuperview];
     
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:[NSString stringWithFormat:@"bookInfoFile%d",self.bookInfo.bookId]];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.bookInfo];
+    [data writeToFile:filename atomically:YES];
+    //    [NSKeyedArchiver archiveRootObject:self.bookInfo toFile:filename];
     
-    NSDictionary *dic = [[NSDictionary alloc] initWithObjects:@[self.bookInfo.bookName,self.bookInfo.bookThumb,[url absoluteString]] forKeys:@[@"bookName",@"bookThumb",@"fileUrl"]];
+    NSDictionary *dic = [[NSDictionary alloc] initWithObjects:@[self.bookInfo.bookName,self.bookInfo.bookThumb,[url absoluteString],filename] forKeys:@[@"bookName",@"bookThumb",@"fileUrl",@"bookInfoFile"]];
     
     NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:[kDocument_Folder stringByAppendingPathComponent:@"epubBooksList.plist"]];
     if (!array) {
@@ -156,7 +199,7 @@
     
     BOOL isNew = YES;
     for (NSDictionary *d in array) {
-        if ([[d objectForKey:@"fileUrl"] isEqualToString:[dic objectForKey:@"fileUrl"]]) {
+        if ([[d objectForKey:@"bookInfoFile"] isEqualToString:[dic objectForKey:@"bookInfoFile"]]) {
             isNew = NO;
         }
     }
@@ -171,9 +214,12 @@
     EPubViewController *epubController = [[EPubViewController alloc] initWithNibName:@"EPubView" bundle:nil];
     [self.tabBarController.navigationController pushViewController:epubController animated:YES];
     
+    epubController.bookInfo = self.bookInfo;
     //    NSURL *urlA = [NSURL fileURLWithPath:path];
     //    NSURL *urlB = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"人生百忌2" ofType:@"epub"]];
     [epubController loadEpub:url];
+    //    [epubController release];
+    epubController = nil;
     
 }
 -(void)loadBookInfo:(BookInfo *)info{

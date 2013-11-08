@@ -251,6 +251,8 @@ static NSOperationQueue *queue;
 //    self.tabBarController = [[UITabBarController alloc] init];
 //    self.tabBarController.viewControllers = @[navigationController1, navigationController2,navigationController3,navigationController4];
 //    self.window.rootViewController = self.tabBarController;
+    
+    
     [self.window makeKeyAndVisible];
     [navigationController1 release];
     navigationController1= nil;

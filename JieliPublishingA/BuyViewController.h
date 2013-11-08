@@ -11,7 +11,8 @@
 #import "BookInfo.h"
 #import "HCDownLoadingView.h"
 #import "HCDownLoad.h"
-@interface BuyViewController : BasicBookViewController<UITableViewDataSource,UITableViewDelegate,HCDownLoadDelegate,HCDownLoadingViewDelegate>
+
+@interface BuyViewController : BasicBookViewController<UITableViewDataSource,UITableViewDelegate,HCDownLoadDelegate,HCDownLoadingViewDelegate,UIAlertViewDelegate>
 
 
 
@@ -19,6 +20,8 @@
 @property (strong,nonatomic) NSArray *arrayOfBuyBoooks;
 @property (strong, nonatomic) UIViewController *tabBarController;
 @property (strong,nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic) NSString *exchangeScore;
+@property (strong,nonatomic) NSString *exchange_id;
 -(void)buy;
 -(void)loadData:(id)result;
 @end
